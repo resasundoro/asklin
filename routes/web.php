@@ -15,6 +15,7 @@ use App\Http\Controllers\M_KaryawanController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\Rumah_SakitController;
 use App\Http\Controllers\AsuransiController;
+use App\Http\Controllers\PageController;
   
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +28,8 @@ use App\Http\Controllers\AsuransiController;
 |
 */
   
-Route::get('/', function () {
-    return view('welcome');
-});
+// Page
+Route::get('/', [PageController::class, 'index'])->name('home');
   
 Auth::routes();
 
