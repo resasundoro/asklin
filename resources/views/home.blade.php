@@ -5,6 +5,7 @@
 @extends('layouts.frontend.main')
 
 @section('content')
+@include('layouts.frontend.slider')
 <div class="container py-4 my-5">
     <div class="row justify-content-center text-center mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">
         <div class="col-lg-8">

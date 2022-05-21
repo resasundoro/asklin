@@ -17,6 +17,7 @@ use App\Http\Controllers\Rumah_SakitController;
 use App\Http\Controllers\AsuransiController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SurveyorController;
+use App\Http\Controllers\PendaftaranController;
   
 /*
 |--------------------------------------------------------------------------
@@ -114,4 +115,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('surveyor/edit', [SurveyorController::class, 'edit'])->name('surveyor.edit');
     Route::post('surveyor/store', [SurveyorController::class, 'store'])->name('surveyor.store');
     Route::post('surveyor/delete', [SurveyorController::class, 'destroy'])->name('surveyor.delete');
+
+    Route::get('pendaftaran', [PendaftaranController::class, 'edit'])->name('pendaftaran');
+    Route::patch('pendaftaran/{{id}}/update', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
 });

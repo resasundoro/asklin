@@ -10,8 +10,6 @@
 
             @include('layouts.frontend.header')
 
-            @include('layouts.frontend.slider')
-
             @yield('content')
 
         </div>
