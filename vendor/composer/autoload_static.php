@@ -200,8 +200,8 @@ class ComposerStaticInit9375dbe9f497c7ddbb3dafe255832bdf
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Yajra\\DataTables\\' => 
         array (
@@ -377,8 +377,8 @@ class ComposerStaticInit9375dbe9f497c7ddbb3dafe255832bdf
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -741,6 +741,7 @@ class ComposerStaticInit9375dbe9f497c7ddbb3dafe255832bdf
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
+        'Database\\Seeders\\CreateSuperadminUserSeeder' => __DIR__ . '/../..' . '/database/seeders/CreateSuperadminUserSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\IndoRegionDistrictSeeder' => __DIR__ . '/../..' . '/database/seeders/IndoRegionDistrictSeeder.php',
         'Database\\Seeders\\IndoRegionProvinceSeeder' => __DIR__ . '/../..' . '/database/seeders/IndoRegionProvinceSeeder.php',

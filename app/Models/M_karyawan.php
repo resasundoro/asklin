@@ -10,6 +10,8 @@ class M_karyawan extends Model
 {
     use HasFactory;
     use Userstamps;
+
+    protected $table = 'm_karyawan';
   
     /**
      * The attributes that are mass assignable.

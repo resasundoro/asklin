@@ -10,6 +10,8 @@ class Paket extends Model
 {
     use HasFactory;
     use Userstamps;
+
+    protected $table = 'paket';
   
     /**
      * The attributes that are mass assignable.

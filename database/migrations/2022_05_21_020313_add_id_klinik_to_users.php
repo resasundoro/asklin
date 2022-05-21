@@ -1,9 +1,9 @@
 <?php
-  
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-  
+
 return new class extends Migration
 {
     /**
@@ -13,16 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pakets', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->string('harga');
-            $table->timestamps();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('id_klinik')->nullable();
+
+            $table->foreign('id_klinik')->references('id')->on('klinik');
         });
     }
-  
+
     /**
      * Reverse the migrations.
      *
@@ -30,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pakets');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('id_klinik');
+        });
     }
 };

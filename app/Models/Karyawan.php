@@ -10,7 +10,9 @@ class Karyawan extends Model
 {
     use HasFactory;
     use Userstamps;
-  
+
+    protected $table = 'karyawan';
+
     /**
      * The attributes that are mass assignable.
      *	

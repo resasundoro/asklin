@@ -10,6 +10,8 @@ class M_fasilitas_klinik extends Model
 {
     use HasFactory;
     use Userstamps;
+
+    protected $table = 'm_fasilitas_klinik';
   
     /**
      * The attributes that are mass assignable.

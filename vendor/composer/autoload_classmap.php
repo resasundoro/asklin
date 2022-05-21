@@ -180,6 +180,7 @@ return array(
     'Cron\\MinutesField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
     'Cron\\MonthField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
     'Database\\Factories\\UserFactory' => $baseDir . '/database/factories/UserFactory.php',
+    'Database\\Seeders\\CreateSuperadminUserSeeder' => $baseDir . '/database/seeders/CreateSuperadminUserSeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
     'Database\\Seeders\\IndoRegionDistrictSeeder' => $baseDir . '/database/seeders/IndoRegionDistrictSeeder.php',
     'Database\\Seeders\\IndoRegionProvinceSeeder' => $baseDir . '/database/seeders/IndoRegionProvinceSeeder.php',

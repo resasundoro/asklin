@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('m_karyawans', function (Blueprint $table) {
+        Schema::create('m_kriteria_klinik', function (Blueprint $table) {
             $table->id();
-            $table->string('kategori');
+            $table->string('kriteria');
+            $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
-            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('m_karyawans');
+        Schema::dropIfExists('m_kriteria_klinik');
     }
 };

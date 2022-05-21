@@ -10,6 +10,8 @@ class Asuransi extends Model
 {
     use HasFactory;
     use Userstamps;
+
+    protected $table = 'asuransi';
   
     /**
      * The attributes that are mass assignable.

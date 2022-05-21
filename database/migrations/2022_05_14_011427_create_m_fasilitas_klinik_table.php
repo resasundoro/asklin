@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('id_klinik')->nullable();
+        Schema::create('m_fasilitas_klinik', function (Blueprint $table) {
+            $table->id();
+            $table->string('fasilitas');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('id_klinik');
-        });
+        Schema::dropIfExists('m_fasilitas_klinik');
     }
 };
