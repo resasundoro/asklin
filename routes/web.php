@@ -16,6 +16,7 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\Rumah_SakitController;
 use App\Http\Controllers\AsuransiController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SurveyorController;
   
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::get('m_karyawan/list', [M_KaryawanController::class, 'getM_Karyawan'])->n
 Route::get('karyawan/list', [KaryawanController::class, 'getKaryawan'])->name('karyawan.list');
 Route::get('rumah_sakit/list', [Rumah_SakitController::class, 'getRumah_Sakit'])->name('rumah_sakit.list');
 Route::get('asuransi/list', [AsuransiController::class, 'getAsuransi'])->name('asuransi.list');
+Route::get('surveyor/list', [SurveyorController::class, 'getSurveyor'])->name('surveyor.list');
 
 // Wilayah
 Route::post('getKota', [WilayahController::class, 'getKota'])->name('getKota');
@@ -107,4 +109,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('asuransi/edit', [AsuransiController::class, 'edit'])->name('asuransi.edit');
     Route::post('asuransi/store', [AsuransiController::class, 'store'])->name('asuransi.store');
     Route::post('asuransi/delete', [AsuransiController::class, 'destroy'])->name('asuransi.delete');
+
+    Route::resource('surveyor', SurveyorController::class);
+    Route::post('surveyor/edit', [SurveyorController::class, 'edit'])->name('surveyor.edit');
+    Route::post('surveyor/store', [SurveyorController::class, 'store'])->name('surveyor.store');
+    Route::post('surveyor/delete', [SurveyorController::class, 'destroy'])->name('surveyor.delete');
 });

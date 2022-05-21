@@ -23,9 +23,9 @@ class M_Kriteria_KlinikController extends Controller
 
     public function getKriteria(Request $request)
     {
-        $data = M_kriteria_klinik::join('users as u1', 'm_kriteria_kliniks.created_by', '=', 'u1.id')
-                                    ->join('users as u2', 'm_kriteria_kliniks.updated_by', '=', 'u2.id')
-                                    ->select(['m_kriteria_kliniks.*', 'u1.id as u1id', 'u1.name as nama1', 'u2.id as u2id', 'u2.name as nama2'])
+        $data = M_kriteria_klinik::join('users as u1', 'm_kriteria_klinik.created_by', '=', 'u1.id')
+                                    ->join('users as u2', 'm_kriteria_klinik.updated_by', '=', 'u2.id')
+                                    ->select(['m_kriteria_klinik.*', 'u1.id as u1id', 'u1.name as nama1', 'u2.id as u2id', 'u2.name as nama2'])
                                     ->latest()->get();
         return Datatables::of($data)
             ->editColumn('created_at', function ($data) {

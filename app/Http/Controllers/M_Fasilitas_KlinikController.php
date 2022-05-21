@@ -23,9 +23,9 @@ class M_Fasilitas_KlinikController extends Controller
 
     public function getFasilitas(Request $request)
     {
-        $data = M_fasilitas_klinik::join('users as u1', 'm_fasilitas_kliniks.created_by', '=', 'u1.id')
-                                    ->join('users as u2', 'm_fasilitas_kliniks.updated_by', '=', 'u2.id')
-                                    ->select(['m_fasilitas_kliniks.*', 'u1.id as u1id', 'u1.name as nama1', 'u2.id as u2id', 'u2.name as nama2'])
+        $data = M_fasilitas_klinik::join('users as u1', 'm_fasilitas_klinik.created_by', '=', 'u1.id')
+                                    ->join('users as u2', 'm_fasilitas_klinik.updated_by', '=', 'u2.id')
+                                    ->select(['m_fasilitas_klinik.*', 'u1.id as u1id', 'u1.name as nama1', 'u2.id as u2id', 'u2.name as nama2'])
                                     ->latest()->get();
         return Datatables::of($data)
             ->editColumn('created_at', function ($data) {

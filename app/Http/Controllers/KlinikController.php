@@ -34,8 +34,8 @@ class KlinikController extends Controller
 
     public function getKlinik(Request $request)
     {
-        $data = Klinik::join('regencies', 'kliniks.kota', '=', 'regencies.id')
-                        ->select('kliniks.*', 'regencies.id as rid', 'regencies.name')
+        $data = Klinik::join('regencies', 'klinik.kota', '=', 'regencies.id')
+                        ->select('klinik.*', 'regencies.id as rid', 'regencies.name')
                         ->latest()->get();
         return Datatables::of($data)
             ->editColumn('created_at', function ($data) {

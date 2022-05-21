@@ -27,9 +27,9 @@ class KaryawanController extends Controller
 
     public function getKaryawan(Request $request)
     {
-        $data = Karyawan::join('m_karyawans as mk', 'karyawans.id_kategori', '=', 'mk.id')
-                        ->join('kliniks as k', 'karyawans.id_klinik', '=', 'k.id')
-                        ->select(['karyawans.*', 'mk.id as mkid', 'mk.kategori', 'k.id as kid', 'k.nama_klinik'])
+        $data = Karyawan::join('m_karyawan as mk', 'karyawan.id_kategori', '=', 'mk.id')
+                        ->join('kliniks as k', 'karyawan.id_klinik', '=', 'k.id')
+                        ->select(['karyawan.*', 'mk.id as mkid', 'mk.kategori', 'k.id as kid', 'k.nama_klinik'])
                         ->latest()->get();
         return Datatables::of($data)
             ->addIndexColumn()

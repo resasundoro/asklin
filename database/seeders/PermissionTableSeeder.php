@@ -61,6 +61,10 @@ class PermissionTableSeeder extends Seeder
             'asuransi-create',
             'asuransi-edit',
             'asuransi-delete',
+            'surveyor-list',
+            'surveyor-create',
+            'surveyor-edit',
+            'surveyor-delete',
         ];
       
         foreach ($permissions as $permission) {

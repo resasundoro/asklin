@@ -23,9 +23,9 @@ class M_Layanan_KlinikController extends Controller
 
     public function getLayanan(Request $request)
     {
-        $data = M_layanan_klinik::join('users as u1', 'm_layanan_kliniks.created_by', '=', 'u1.id')
-                                    ->join('users as u2', 'm_layanan_kliniks.updated_by', '=', 'u2.id')
-                                    ->select(['m_layanan_kliniks.*', 'u1.id as u1id', 'u1.name as nama1', 'u2.id as u2id', 'u2.name as nama2'])
+        $data = M_layanan_klinik::join('users as u1', 'm_layanan_klinik.created_by', '=', 'u1.id')
+                                    ->join('users as u2', 'm_layanan_klinik.updated_by', '=', 'u2.id')
+                                    ->select(['m_layanan_klinik.*', 'u1.id as u1id', 'u1.name as nama1', 'u2.id as u2id', 'u2.name as nama2'])
                                     ->latest()->get();
         return Datatables::of($data)
             ->editColumn('created_at', function ($data) {

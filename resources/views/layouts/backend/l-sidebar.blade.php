@@ -44,6 +44,12 @@
                     </li>
                 @endcan
 
+                @can('surveyor-list')
+                    <li class="slide {{Request::is('surveyor') ? 'is-expanded' : ''}}">
+                        <a class="side-menu__item {{Request::is('surveyor') ? 'active' : ''}}" data-bs-toggle="slide" href="{{ url('surveyor') }}"><i class="side-menu__icon fe fe-briefcase"></i><span class="side-menu__label">Surveyor</span></a>
+                    </li>
+                @endcan
+
                 @can(['paket-list', 'm-kriteria-klinik-list', 'm-fasilitas-klinik-list', 'm-layanan-klinik-list', 'm-karyawan-list'])
                     <li class="slide {{Request::is(['paket', 'kriteria_klinik', 'fasilitas_klinik', 'layanan_klinik', 'm_karyawan']) ? 'is-expanded' : ''}}">
                         <a class="side-menu__item {{Request::is(['paket', 'kriteria_klinik', 'fasilitas_klinik', 'layanan_klinik', 'm_karyawan']) ? 'active is-expanded' : ''}}" data-bs-toggle="slide" href="javascript:void(0)">

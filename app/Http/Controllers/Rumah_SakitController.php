@@ -29,10 +29,10 @@ class Rumah_SakitController extends Controller
 
     public function getRumah_Sakit(Request $request)
     {
-        $data = Rumah_sakit::join('kliniks as k', 'rumah_sakits.id_klinik', '=', 'k.id')
-                            ->join('provinces as p', 'rumah_sakits.id_provinsi', '=', 'p.id')
-                            ->join('regencies as r', 'rumah_sakits.id_kota', '=', 'r.id')
-                            ->select(['rumah_sakits.*', 'k.id as kid', 'k.nama_klinik', 'p.id as pid', 'p.name as nama_provinsi', 'r.id as rid', 'r.name as nama_kota'])
+        $data = Rumah_sakit::join('kliniks as k', 'rumah_sakit.id_klinik', '=', 'k.id')
+                            ->join('provinces as p', 'rumah_sakit.id_provinsi', '=', 'p.id')
+                            ->join('regencies as r', 'rumah_sakit.id_kota', '=', 'r.id')
+                            ->select(['rumah_sakit.*', 'k.id as kid', 'k.nama_klinik', 'p.id as pid', 'p.name as nama_provinsi', 'r.id as rid', 'r.name as nama_kota'])
                             ->latest()->get();
         return Datatables::of($data)
             ->addIndexColumn()

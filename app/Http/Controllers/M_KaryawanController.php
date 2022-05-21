@@ -23,9 +23,9 @@ class M_KaryawanController extends Controller
 
     public function getM_Karyawan(Request $request)
     {
-        $data = M_karyawan::join('users as u1', 'm_karyawans.created_by', '=', 'u1.id')
-        ->join('users as u2', 'm_karyawans.updated_by', '=', 'u2.id')
-        ->select(['m_karyawans.*', 'u1.id as u1id', 'u1.name as nama1', 'u2.id as u2id', 'u2.name as nama2'])
+        $data = M_karyawan::join('users as u1', 'm_karyawan.created_by', '=', 'u1.id')
+        ->join('users as u2', 'm_karyawan.updated_by', '=', 'u2.id')
+        ->select(['m_karyawan.*', 'u1.id as u1id', 'u1.name as nama1', 'u2.id as u2id', 'u2.name as nama2'])
         ->latest()->get();
         return Datatables::of($data)
             ->editColumn('created_at', function ($data) {
