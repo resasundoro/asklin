@@ -22,3 +22,5 @@
 
 <!-- Theme Initialization Files -->
 <script src="{{ asset('frontend/js/theme.init.js') }}"></script>
+
+@yield('js')

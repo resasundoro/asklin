@@ -28,7 +28,7 @@ class KaryawanController extends Controller
     public function getKaryawan(Request $request)
     {
         $data = Karyawan::join('m_karyawan as mk', 'karyawan.id_kategori', '=', 'mk.id')
-                        ->join('kliniks as k', 'karyawan.id_klinik', '=', 'k.id')
+                        ->join('klinik as k', 'karyawan.id_klinik', '=', 'k.id')
                         ->select(['karyawan.*', 'mk.id as mkid', 'mk.kategori', 'k.id as kid', 'k.nama_klinik'])
                         ->latest()->get();
         return Datatables::of($data)

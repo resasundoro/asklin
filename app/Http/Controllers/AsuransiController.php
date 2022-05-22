@@ -29,7 +29,7 @@ class AsuransiController extends Controller
 
     public function getAsuransi(Request $request)
     {
-        $data = Asuransi::join('kliniks as k', 'asuransi.id_klinik', '=', 'k.id')
+        $data = Asuransi::join('klinik as k', 'asuransi.id_klinik', '=', 'k.id')
                             ->join('provinces as p', 'asuransi.id_provinsi', '=', 'p.id')
                             ->join('regencies as r', 'asuransi.id_kota', '=', 'r.id')
                             ->select(['asuransi.*', 'k.id as kid', 'k.nama_klinik', 'p.id as pid', 'p.name as nama_provinsi', 'r.id as rid', 'r.name as nama_kota'])

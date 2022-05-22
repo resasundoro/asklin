@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('klinik', function (Blueprint $table) {
             $table->id();
+            $table->enum('asklin', ['0', '1'])->nullable();
             $table->string('no_anggota')->nullable();
             $table->string('nama_klinik')->nullable();
             $table->text('logo_klinik')->nullable();
@@ -40,22 +41,13 @@ return new class extends Migration
             $table->string('bentuk_badan_usaha')->nullable();
             $table->string('bentuk_badan_hukum')->nullable();
             $table->string('nama_badan')->nullable();
-            $table->unsignedBigInteger('kriteria')->nullable();
-            $table->unsignedBigInteger('fasilitas')->nullable();
-            $table->unsignedBigInteger('layanan')->nullable();
+            $table->string('kriteria')->nullable();
+            $table->string('fasilitas')->nullable();
+            $table->string('layanan')->nullable();
             $table->enum('status', ['Waiting','Process','Approved','Create Dokter','Selesai Input','Data Tidak Sesuai','Ditolak Pusat','Kirim Konfirmasi Pembayaran'])->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
-
-            $table->foreign('kelurahan')->references('id')->on('villages');
-            $table->foreign('kecamatan')->references('id')->on('districts');
-            $table->foreign('kota')->references('id')->on('regencies');
-            $table->foreign('provinsi')->references('id')->on('provinces');
-
-            $table->foreign('kriteria')->references('id')->on('m_kriteria_klinik');
-            $table->foreign('fasilitas')->references('id')->on('m_fasilitas_klinik');
-            $table->foreign('layanan')->references('id')->on('m_layanan_klinik');
         });
     }
 

@@ -116,6 +116,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('surveyor/store', [SurveyorController::class, 'store'])->name('surveyor.store');
     Route::post('surveyor/delete', [SurveyorController::class, 'destroy'])->name('surveyor.delete');
 
-    Route::get('pendaftaran', [PendaftaranController::class, 'edit'])->name('pendaftaran');
-    Route::patch('pendaftaran/{{id}}/update', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
+    Route::get('pendaftaran/edit', [PendaftaranController::class, 'edit'])->name('pendaftaran.edit');
+    Route::put('pendaftaran/{id}/update', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
+    Route::get('pendaftaran/sdm', [PendaftaranController::class, 'sdm'])->name('pendaftaran.sdm');
+
 });
