@@ -555,33 +555,33 @@
 
     $("#id_kategori").change(function() {
         if ($(this).val() == "0") {
-            $('.grup1, .grup2, .grup3, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10, .grup11, .grup12').hide();
+            $('.grup1, .grup2, .grup3, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10, .grup11, .grup12, .grup13, .grup14, .grup15').hide();
         } else if ($(this).val() == "1") {
-            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9').show();
-            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12').hide();
+            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9, .grup13, .grup14').show();
+            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12, .grup15').hide();
             $('.nama').html('Nama Dokter');
             $('.npa_idi').html('NPA IDI');
             $('.no_sip').html('No. SIP');
         } else if ($(this).val() == "2") {
-            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9').show();
-            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12').hide();
+            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9, .grup13, .grup14').show();
+            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12, .grup15').hide();
             $('.nama').html('Nama Dokter');
             $('.npa_idi').html('NPA IDI/PDGI');
             $('.no_sip').html('No. SIP');
         } else if ($(this).val() == "3") {
-            $('.grup1, .grup4, .grup5, .grup8, .grup11').show();
-            $('.grup2, .grup3, .grup6, .grup7, .grup9, .grup10, .grup12').hide();
+            $('.grup1, .grup4, .grup5, .grup8, .grup11, .grup13, .grup14').show();
+            $('.grup2, .grup3, .grup6, .grup7, .grup9, .grup10, .grup12, .grup15').hide();
             $('.nama').html('Nama Lengkap');
         } else if ($(this).val() == "4") {
-            $('.grup1, .grup2, .grup4, .grup5, .grup6, .grup8, .grup10').show();
-            $('.grup3, .grup7, .grup9, .grup11, .grup12').hide();
+            $('.grup1, .grup2, .grup4, .grup5, .grup6, .grup8, .grup10, .grup13, .grup14').show();
+            $('.grup3, .grup7, .grup9, .grup11, .grup12, .grup15').hide();
             $('.nama').html('Nama Lengkap');
             $('.no_sib_sik').html('No. SIAA/SIK');
             $('.no_sip').html('No. SIPA');
             $('.ket_sib_sik').html('Keterangan SIPA/SIA/SIK')
         } else if ($(this).val() == "5") {
-            $('.grup1,.grup11, .grup12').show();
-            $('.grup2,.grup4, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10').hide();
+            $('.grup1,.grup11, .grup12, .grup15').show();
+            $('.grup2,.grup4, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10, .grup13, .grup14').hide();
             $('.nama').html('Nama Lengkap');
         }
     });

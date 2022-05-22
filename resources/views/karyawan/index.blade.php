@@ -140,6 +140,24 @@
                             <input type="text" class="form-control" id="jabatan" name="jabatan">
                         </div>
                     </div>
+                    <div class="row mb-3 grup13">
+                        <label class="col-md-3 form-label">Upload SIP</label>
+                        <div class="col-md-9">
+                            <input type="file" class="form-control" id="foto_sip" name="foto_sip">
+                        </div>
+                    </div>
+                    <div class="row mb-3 grup14">
+                        <label class="col-md-3 form-label">Upload STR</label>
+                        <div class="col-md-9">
+                            <input type="file" class="form-control" id="foto_str" name="foto_str">
+                        </div>
+                    </div>
+                    <div class="row mb-3 grup15">
+                        <label class="col-md-3 form-label">Upload Ijazah</label>
+                        <div class="col-md-9">
+                            <input type="file" class="form-control" id="foto_ijazah" name="foto_ijazah">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" id="btn-save" type="submit">Simpan</button>
@@ -212,6 +230,21 @@
                 $('#modal').modal('show');
                 $('#id').val(data.id);
                 $('#id_klinik').val(data.id_klinik);
+                $('#id_kategori').val(data.id_kategori);
+                $('#nama').val(data.nama);
+                $('#npa_idi').val(data.npa_idi);
+                $('#no_str').val(data.no_str);
+                $('#tgl_akhir_sip').val(data.tgl_akhir_sip);
+                $('#no_tlf').val(data.no_tlf);
+                $('#no_sib_sik').val(data.no_sib_sik);
+                $('#tgl_akhir_str').val(data.tgl_akhir_str);
+                $('#ket_sib_sik').val(data.ket_sib_sik);
+                $('#farmasi_apoteker').val(data.farmasi_apoteker);
+                $('#ijazah_terakhir').val(data.ijazah_terakhir);
+                $('#jabatan').val(data.jabatan);
+                $('#foto_sip').val(data.foto_sip);
+                $('#foto_str').val(data.foto_str);
+                $('#foto_ijazah').val(data.foto_ijazah);
             }
         });
     }
@@ -265,95 +298,34 @@
 
     $("#id_kategori").change(function() {
         if ($(this).val() == "0") {
-            $('.grup1').hide();
-            $('.grup2').hide();
-            $('.grup3').hide();
-            $('.grup4').hide();
-            $('.grup5').hide();
-            $('.grup6').hide();
-            $('.grup7').hide();
-            $('.grup8').hide();
-            $('.grup9').hide();
-            $('.grup10').hide();
-            $('.grup11').hide();
-            $('.grup12').hide();
+            $('.grup1, .grup2, .grup3, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10, .grup11, .grup12, .grup13, .grup14, .grup15').hide();
         } else if ($(this).val() == "1") {
-            $('.grup1').show();
+            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9, .grup13, .grup14').show();
+            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12, .grup15').hide();
             $('.nama').html('Nama Dokter');
-            $('.grup2').hide();
-            $('.grup3').show();
             $('.npa_idi').html('NPA IDI');
-            $('.grup4').hide();
-            $('.grup5').show();
-            $('.grup6').show();
             $('.no_sip').html('No. SIP');
-            $('.grup7').show();
-            $('.grup8').hide();
-            $('.grup9').show();
-            $('.grup10').hide();
-            $('.grup11').hide();
-            $('.grup12').hide();
         } else if ($(this).val() == "2") {
-            $('.grup1').show();
+            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9, .grup13, .grup14').show();
+            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12, .grup15').hide();
             $('.nama').html('Nama Dokter');
-            $('.grup2').hide();
-            $('.grup3').show();
             $('.npa_idi').html('NPA IDI/PDGI');
-            $('.grup4').hide();
-            $('.grup5').show();
-            $('.grup6').show();
             $('.no_sip').html('No. SIP');
-            $('.grup7').show();
-            $('.grup8').hide();
-            $('.grup9').show();
-            $('.grup10').hide();
-            $('.grup11').hide();
-            $('.grup12').hide();
         } else if ($(this).val() == "3") {
-            $('.grup1').show();
+            $('.grup1, .grup4, .grup5, .grup8, .grup11, .grup13, .grup14').show();
+            $('.grup2, .grup3, .grup6, .grup7, .grup9, .grup10, .grup12, .grup15').hide();
             $('.nama').html('Nama Lengkap');
-            $('.grup2').hide();
-            $('.grup3').hide();
-            $('.grup4').show();
-            $('.grup5').show();
-            $('.grup6').hide();
-            $('.grup7').hide();
-            $('.grup8').show();
-            $('.grup9').hide();
-            $('.grup10').show();
-            $('.grup11').hide();
-            $('.grup12').hide();
         } else if ($(this).val() == "4") {
-            $('.grup1').show();
+            $('.grup1, .grup2, .grup4, .grup5, .grup6, .grup8, .grup10, .grup13, .grup14').show();
+            $('.grup3, .grup7, .grup9, .grup11, .grup12, .grup15').hide();
             $('.nama').html('Nama Lengkap');
-            $('.grup2').show();
-            $('.grup3').hide();
-            $('.grup4').show();
             $('.no_sib_sik').html('No. SIAA/SIK');
-            $('.grup5').show();
-            $('.grup6').show();
             $('.no_sip').html('No. SIPA');
-            $('.grup7').hide();
-            $('.grup8').show();
-            $('.grup9').hide();
-            $('.grup10').show();
             $('.ket_sib_sik').html('Keterangan SIPA/SIA/SIK')
-            $('.grup11').hide();
-            $('.grup12').hide();
         } else if ($(this).val() == "5") {
-            $('.grup1').show();
+            $('.grup1,.grup11, .grup12, .grup15').show();
+            $('.grup2,.grup4, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10, .grup13, .grup14').hide();
             $('.nama').html('Nama Lengkap');
-            $('.grup2').hide();
-            $('.grup3').hide();
-            $('.grup4').hide();
-            $('.grup5').hide();
-            $('.grup6').hide();
-            $('.grup7').hide();
-            $('.grup8').hide();
-            $('.grup9').hide();
-            $('.grup10').hide();
-            $('.grup11').show();
-            $('.grup12').show();
         }
     });
     $("#id_kategori").trigger("change");

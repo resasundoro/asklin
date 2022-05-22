@@ -55,9 +55,11 @@ class KlinikController extends Controller
         ]);
 
         if ($logo_klinik = $request->file('logo_klinik')) {
-            $destinationPath = 'images/';
+            $destinationPath = 'images/klinik';
             $profilKlinik = date('YmdHis') . "." . $logo_klinik->getClientOriginalExtension();
             $logo_klinik->move($destinationPath, $profilKlinik);
+        }else{
+            unset($logo_klinik);
         }
 
         $kriteria = implode(",", $request->kriteria);
@@ -119,9 +121,11 @@ class KlinikController extends Controller
         ]);
 
         if ($logo_klinik = $request->file('logo_klinik')) {
-            $destinationPath = 'images/';
+            $destinationPath = 'images/klinik';
             $profilKlinik = date('YmdHis') . "." . $logo_klinik->getClientOriginalExtension();
             $logo_klinik->move($destinationPath, $profilKlinik);
+        }else{
+            unset($logo_klinik);
         }
 
         $kriteria = implode(",", $request->kriteria);

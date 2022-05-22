@@ -40,6 +40,29 @@ class KaryawanController extends Controller
 
     public function store(Request $request)
     {
+        if ($foto_str = $request->file('foto_str')) {
+            $destinationPath = 'images/klinik/sdm/';
+            $foto_STR = date('YmdHis') . "." . $foto_str->getClientOriginalExtension();
+            $foto_str->move($destinationPath, $foto_STR);
+        }else{
+            unset($foto_str);
+        }
+
+        if ($foto_sip = $request->file('foto_sip')) {
+            $destinationPath = 'images/klinik/sdm/';
+            $foto_SIP = date('YmdHis') . "." . $foto_sip->getClientOriginalExtension();
+            $foto_sip->move($destinationPath, $foto_SIP);
+        }else{
+            unset($foto_sip);
+        }
+
+        if ($foto_ijazah = $request->file('foto_ijazah')) {
+            $destinationPath = 'images/klinik/sdm/';
+            $foto_IJAZAH = date('YmdHis') . "." . $foto_ijazah->getClientOriginalExtension();
+            $foto_ijazah->move($destinationPath, $foto_IJAZAH);
+        }else{
+            unset($foto_ijazah);
+        }
 
         $ID = $request->id;
         $data = Karyawan::updateOrCreate(
@@ -57,7 +80,10 @@ class KaryawanController extends Controller
                 'ket_sib_sik' => $request->ket_sib_sik,
                 'farmasi_apoteker' => $request->farmasi_apoteker,
                 'ijazah_terakhir' => $request->ijazah_terakhir,
-                'jabatan' => $request->jabatan
+                'jabatan' => $request->jabatan,
+                'foto_sip' => $foto_SIP,
+                'foto_str' => $foto_STR,
+                'foto_ijazah' => $foto_IJAZAH
             ]
         );
 
