@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Klinik;
 use App\Models\M_kriteria_klinik;
 use App\Models\M_fasilitas_klinik;
+use App\Models\Karyawan;
+use App\Models\Rumah_sakit;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\District;
@@ -77,11 +79,17 @@ class PendaftaranController extends Controller
             ]
         );
 
-        return redirect()->route('pendaftaran.edit')->with('success','Klinik berhasil diperbarui');
+        return redirect()->route('pendaftaran.sdm')->with('success','Klinik berhasil diperbarui');
     }
 
     public function sdm()
     {
-        return view('pendaftaran.sdm');
+        $pj = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 1]])->get();
+        $dp = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 2]])->get();
+        $tp = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 3]])->get();
+        $tkl = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 4]])->get();
+        $tsl = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 5]])->get();
+        $rs = Rumah_sakit::where('id_klinik', Auth::user()->id_klinik)->get();
+        return view('pendaftaran.sdm', compact('pj', 'dp', 'tp', 'tkl', 'tsl', 'rs'));
     }
 }

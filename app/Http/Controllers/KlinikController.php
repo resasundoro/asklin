@@ -59,7 +59,7 @@ class KlinikController extends Controller
             $profilKlinik = date('YmdHis') . "." . $logo_klinik->getClientOriginalExtension();
             $logo_klinik->move($destinationPath, $profilKlinik);
         }else{
-            unset($logo_klinik);
+            unset($profilKlinik);
         }
 
         $kriteria = implode(",", $request->kriteria);
@@ -125,7 +125,7 @@ class KlinikController extends Controller
             $profilKlinik = date('YmdHis') . "." . $logo_klinik->getClientOriginalExtension();
             $logo_klinik->move($destinationPath, $profilKlinik);
         }else{
-            unset($logo_klinik);
+            unset($profilKlinik);
         }
 
         $kriteria = implode(",", $request->kriteria);

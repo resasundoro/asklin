@@ -42,10 +42,10 @@ class KaryawanController extends Controller
     {
         if ($foto_str = $request->file('foto_str')) {
             $destinationPath = 'images/klinik/sdm/';
-            $foto_STR = date('YmdHis') . "." . $foto_str->getClientOriginalExtension();
+            $foto_STR = date('YmdHis') . "-" . uniqid() . "." . $foto_str->getClientOriginalExtension();
             $foto_str->move($destinationPath, $foto_STR);
         }else{
-            unset($foto_str);
+            $foto_STR = NULL;
         }
 
         if ($foto_sip = $request->file('foto_sip')) {
@@ -53,7 +53,7 @@ class KaryawanController extends Controller
             $foto_SIP = date('YmdHis') . "." . $foto_sip->getClientOriginalExtension();
             $foto_sip->move($destinationPath, $foto_SIP);
         }else{
-            unset($foto_sip);
+            $foto_SIP = NULL;
         }
 
         if ($foto_ijazah = $request->file('foto_ijazah')) {
@@ -61,7 +61,7 @@ class KaryawanController extends Controller
             $foto_IJAZAH = date('YmdHis') . "." . $foto_ijazah->getClientOriginalExtension();
             $foto_ijazah->move($destinationPath, $foto_IJAZAH);
         }else{
-            unset($foto_ijazah);
+            $foto_IJAZAH = NULL;
         }
 
         $ID = $request->id;
@@ -75,6 +75,7 @@ class KaryawanController extends Controller
                 'no_str' => $request->no_str,
                 'tgl_akhir_sip' => $request->tgl_akhir_sip,
                 'no_tlf' => $request->no_tlf,
+                'no_sip' => $request->no_sip,
                 'no_sib_sik' => $request->no_sib_sik,
                 'tgl_akhir_str' => $request->tgl_akhir_str,
                 'ket_sib_sik' => $request->ket_sib_sik,

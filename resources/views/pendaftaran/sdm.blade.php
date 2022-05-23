@@ -52,7 +52,9 @@
 
             <table class="table table-bordered">
 				<div class="col">
-				    <a href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="PJ()"><i class="fas fa-plus ms-2"></i> Tambah Penanggungjawab</a>
+                    @can('karyawan-create')
+                        <a href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="PJ()"><i class="fas fa-plus ms-2"></i> Tambah Penanggungjawab</a>
+                    @endcan
 				</div>
                 <thead>
                     <tr>
@@ -63,13 +65,35 @@
                         <th>Tgl. Akhir SIP</th>
                         <th>Telepon</th>
                         <th>Upload</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-
-                    </tr>
-
+                    @foreach ($pj as $i)
+                        <tr>
+                            <td>{{ $i->nama }}</td>
+                            <td>{{ $i->npa_idi }}</td>
+                            <td>{{ $i->no_str }}</td>
+                            <td>{{ $i->no_sip }}</td>
+                            <td>{{ $i->tgl_akhir_sip }}</td>
+                            <td>{{ $i->no_tlf }}</td>
+                            <td>
+                                <a href="{{ asset('images/klinik/sdm/' . $i->foto_str) }}" target="_blank">Nomor STR</a>
+                                <br/>
+                                <a href="{{ asset('images/klinik/sdm/' . $i->foto_sip) }}" target="_blank">Nomor SIP</a>
+                            </td>
+                            <td>
+                                <div class="btn-group align-top">
+                                    @can('karyawan-edit')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="edit({{ $i->id }})">Edit</button>
+                                    @endcan
+                                    @can('karyawan-delete')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="deleteu({{ $i->id }})"><i class="fa fa-trash"></i></button>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
 			</table>
 
@@ -82,7 +106,9 @@
 				</div>
 			</div>
 			<div class="col-lg-8 col-xl-7 text-center text-md-start">
-				<a  href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="TD()"><i class="fas fa-plus ms-2"></i> Tambah Dokter</a>
+                @can('karyawan-create')
+                    <a href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="TD()"><i class="fas fa-plus ms-2"></i> Tambah Dokter</a>
+                @endcan
 			</div>
 			<table class="table table-bordered">
 				<thead>
@@ -93,13 +119,36 @@
                         <th>No. SIP</th>
                         <th>Tgl. Akhir SIP</th>
                         <th>Telepon</th>
+                        <th>Upload</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-
-                    </tr>
-                    
+                    @foreach ($dp as $i)
+                        <tr>
+                            <td>{{ $i->nama }}</td>
+                            <td>{{ $i->npa_idi }}</td>
+                            <td>{{ $i->no_str }}</td>
+                            <td>{{ $i->no_sip }}</td>
+                            <td>{{ $i->tgl_akhir_sip }}</td>
+                            <td>{{ $i->no_tlf }}</td>
+                            <td>
+                                <a href="{{ asset('images/klinik/sdm/' . $i->foto_str) }}" target="_blank">Nomor STR</a>
+                                <br/>
+                                <a href="{{ asset('images/klinik/sdm/' . $i->foto_sip) }}" target="_blank">Nomor SIP</a>
+                            </td>
+                            <td>
+                                <div class="btn-group align-top">
+                                    @can('karyawan-edit')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="edit({{ $i->id }})">Edit</button>
+                                    @endcan
+                                    @can('karyawan-delete')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="deleteu({{ $i->id }})"><i class="fa fa-trash"></i></button>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 
@@ -112,7 +161,9 @@
                 </div>
             </div>
             <div class="col-lg-8 col-xl-7 text-center text-md-start">
-                <a  href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="TP()"><i class="fas fa-plus ms-2"></i> Tambah Perawat</a>
+                @can('karyawan-create')
+                    <a href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="TP()"><i class="fas fa-plus ms-2"></i> Tambah Perawat</a>
+                @endcan
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -122,12 +173,35 @@
                         <th>No. STR</th>
                         <th>Tgl. Akhir STR</th>
                         <th>Keterangan SIB / SIK </th>
+                        <th>Upload</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-
-                    </tr>
+                    @foreach ($tp as $i)
+                        <tr>
+                            <td>{{ $i->nama }}</td>
+                            <td>{{ $i->no_sib_sik }}</td>
+                            <td>{{ $i->no_str }}</td>
+                            <td>{{ $i->tgl_akhir_str }}</td>
+                            <td>{{ $i->ket_sib_sik }}</td>
+                            <td>
+                                <a href="{{ asset('images/klinik/sdm/' . $i->foto_str) }}" target="_blank">Nomor STR</a>
+                                <br/>
+                                <a href="{{ asset('images/klinik/sdm/' . $i->foto_sip) }}" target="_blank">Nomor SIP</a>
+                            </td>
+                            <td>
+                                <div class="btn-group align-top">
+                                    @can('karyawan-edit')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="edit({{ $i->id }})">Edit</button>
+                                    @endcan
+                                    @can('karyawan-delete')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="deleteu({{ $i->id }})"><i class="fa fa-trash"></i></button>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 
@@ -140,22 +214,51 @@
                 </div>
             </div>
             <div class="col-lg-8 col-xl-7 text-center text-md-start">
-                <a  href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="TKL()"><i class="fas fa-plus ms-2"></i> Tambah Tenaga Kesehatan Lain</a>
+                @can('karyawan-create')
+                    <a href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="TKL()"><i class="fas fa-plus ms-2"></i> Tambah Tenaga Kesehatan Lain</a>
+                @endcan
             </div>
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Nama Lengkap</th>
-                        <th>Tekni Kefarmasian / Apoteker</th>
+                        <th>Teknis Kefarmasian / Apoteker</th>
                         <th>No. STR</th>
                         <th>Tgl. Akhir STR</th>
                         <th>No. SIPA</th>
                         <th>No. SIAA / SIK</th>
                         <th>Keterangan SIPA / SIAA / SIK</th>
+                        <th>Upload</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr></tr>
+                    @foreach ($tkl as $i)
+                        <tr>
+                            <td>{{ $i->nama }}</td>
+                            <td>{{ $i->farmasi_apoteker }}</td>
+                            <td>{{ $i->no_str }}</td>
+                            <td>{{ $i->tgl_akhir_str }}</td>
+                            <td>{{ $i->no_sip }}</td>
+                            <td>{{ $i->no_sib_sik }}</td>
+                            <td>{{ $i->ket_sib_sik }}</td>
+                            <td>
+                                <a href="{{ asset('images/klinik/sdm/' . $i->foto_str) }}" target="_blank">Nomor STR</a>
+                                <br/>
+                                <a href="{{ asset('images/klinik/sdm/' . $i->foto_sip) }}" target="_blank">Nomor SIP</a>
+                            </td>
+                            <td>
+                                <div class="btn-group align-top">
+                                    @can('karyawan-edit')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="edit({{ $i->id }})">Edit</button>
+                                    @endcan
+                                    @can('karyawan-delete')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="deleteu({{ $i->id }})"><i class="fa fa-trash"></i></button>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 
@@ -168,7 +271,9 @@
                 </div>
             </div>
             <div class="col-lg-8 col-xl-7 text-center text-md-start">
-                <a  href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="TSL()"><i class="fas fa-plus ms-2"></i> Tambah Tenaga SDM Lain</a>
+                @can('karyawan-create')
+                    <a href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="TSL()"><i class="fas fa-plus ms-2"></i> Tambah Tenaga SDM Lain</a>
+                @endcan
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -176,10 +281,31 @@
                         <th>Nama Lengkap</th>
                         <th>Ijazah Terakhir</th>
                         <th>Jabatan / Pekerjaan</th>
+                        <th>Upload</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr></tr>
+                    @foreach ($tsl as $i)
+                        <tr>
+                            <td>{{ $i->nama }}</td>
+                            <td>{{ $i->ijazah_terakhir }}</td>
+                            <td>{{ $i->jabatan }}</td>
+                            <td>
+                                <a href="{{ asset('images/klinik/sdm/' . $i->foto_ijazah) }}" target="_blank">Foto Ijazah</a>
+                            </td>
+                            <td>
+                                <div class="btn-group align-top">
+                                    @can('karyawan-edit')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="edit({{ $i->id }})">Edit</button>
+                                    @endcan
+                                    @can('karyawan-delete')
+                                        <button class="btn btn-sm btn-primary badge" type="button" onClick="deleteu({{ $i->id }})"><i class="fa fa-trash"></i></button>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 
@@ -192,7 +318,9 @@
                 </div>
             </div>
             <div class="col-lg-8 col-xl-7 text-center text-md-start">
-                <a  href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#formRSterdekat"><i class="fas fa-plus ms-2"></i> Tambah RS Terdekat</a>
+                @can('rumah-sakit-create')
+                    <a href="javascript:void(0)" class="mb-1 mt-1 me-1 btn btn-outline btn-primary mb-2" onClick="RS()"><i class="fas fa-plus ms-2"></i> Tambah RS Terdekat</a>
+                @endcan
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -361,7 +489,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="form" class="mb-4" novalidate="novalidate">
+                <form id="demo-form" class="mb-4" novalidate="novalidate">
                     <div class="alert alert-info alert-admin">
                         <div class="row">
                             <div class="col-lg-8">
@@ -380,7 +508,7 @@
     </div>
 </div>
 
-<!-- MODAL PENANGGUNG JAWAB -->
+<!-- MODAL SDM -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -388,8 +516,8 @@
                 <h4 class="modal-title"></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <div class="modal-body">
-                <form id="demo-form" class="mb-4" novalidate="novalidate">
+            <form action="javascript:void(0)" id="form" class="mb-4" novalidate="novalidate" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
                     <input type="hidden" name="id" id="id">
                     <input type="hidden" name="id_klinik" id="id_klinik">
                     <div class="form-group row align-items-center">
@@ -456,7 +584,7 @@
                     <div class="form-group row grup9">
                         <label class="col-sm-3 text-start text-sm-end mb-0">No Telpon</label>
                         <div class="col-sm-9">
-                            <input type="text" id="no_tlp" name="no_tlp" class="form-control" />
+                            <input type="text" id="no_tlf" name="no_tlf" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row grup10">
@@ -474,25 +602,77 @@
                     <div class="form-group row grup12">
                         <label class="col-sm-3 text-start text-sm-end mb-0 no_sip">Pekerjaan / Jabatan</label>
                         <div class="col-sm-9">
-                            <input type="text" id="ijazah_terakhir" name="ijazah_terakhir" class="form-control" />
+                            <input type="text" id="jabatan" name="jabatan" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row grup13">
                         <label class="col-sm-3 text-start text-sm-end mb-0">Upload Data</label>
                         <div class="col-sm-9">
                             <label for="foto_sip" class="form-label">Upload SIP</label>
-                                <input class="form-control" type="file" id="foto_sip" name="foto_sip">
+                            <input class="form-control" type="file" id="foto_sip" name="foto_sip">
                             <label for="foto_str" class="form-label">Upload STR</label>
-                                <input class="form-control" type="file" id="foto_str" name="foto_str">
-                            
+                            <input class="form-control" type="file" id="foto_str" name="foto_str">
                         </div>
                     </div>
-                </form>
+                    <div class="form-group row grup14">
+                        <label class="col-sm-3 text-start text-sm-end mb-0">Upload Data</label>
+                        <div class="col-sm-9">
+                            <label for="foto_sip" class="form-label">Upload Ijazah</label>
+                            <input class="form-control" type="file" id="foto_ijazah" name="foto_ijazah">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL RUMAH SAKIT TERDEKAT -->
+<div class="modal fade" id="modal-rs" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="formModalLabel">Tambah Rumah Sakit Terdekat</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btn-save">Simpan</button>
-            </div>
+            <form action="javascript:void(0)" id="form-rs" class="mb-4" novalidate="novalidate" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="id_klinik" id="id_klinik_rs">
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 text-start text-sm-end mb-0">Nama RS</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="rs" id="rs" class="form-control" placeholder="Nama Rumah Sakit" required/>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-sm-3 text-start text-sm-end mb-0">Alamat</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="alamat" id="alamat" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-start text-sm-end mb-0">Jarak</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="jarak" id="tlf" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-start text-sm-end mb-0">Telepon</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="tlf" id="tlf" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save-rs">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -515,6 +695,7 @@
         $('#op1').show();
         $('#op2, #op3, #op4, #op5').hide();
         $('#id').val('');
+        $('#id_klinik').val('{{ Auth::user()->id_klinik }}');
     }
 
     function TD(){
@@ -524,6 +705,7 @@
         $('#op2').show();
         $('#op1, #op3, #op4, #op5').hide();
         $('#id').val('');
+        $('#id_klinik').val('{{ Auth::user()->id_klinik }}');
     }
 
     function TP(){
@@ -533,6 +715,7 @@
         $('#op3').show();
         $('#op1, #op2, #op4, #op5').hide();
         $('#id').val('');
+        $('#id_klinik').val('{{ Auth::user()->id_klinik }}');
     }
 
     function TKL(){
@@ -542,6 +725,7 @@
         $('#op4').show();
         $('#op1, #op2, #op3, #op5').hide();
         $('#id').val('');
+        $('#id_klinik').val('{{ Auth::user()->id_klinik }}');
     }
 
     function TSL(){
@@ -551,37 +735,96 @@
         $('#op5').show();
         $('#op1, #op2, #op3, #op4').hide();
         $('#id').val('');
+        $('#id_klinik').val('{{ Auth::user()->id_klinik }}');
     }
+
+    function RS(){
+        $('#form').trigger("reset");
+        $('.modal-title').html("Tambah Rumah Sakit");
+        $('#modal-rs').modal('show');
+        $('#id').val('');
+        $('#id_klinik_rs').val('{{ Auth::user()->id_klinik }}');
+    }
+
+    $('#form').submit(function(e) {
+        e.preventDefault();
+        $("#btn-save"). attr("disabled", true);
+        var formData = new FormData(this);
+        $.ajax({
+            type:'POST',
+            url: '{{ route('karyawan.store') }}',
+            data: formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                $("#btn-save").html('Submit');
+                $("#btn-save"). attr("disabled", false);
+                location.reload();
+            },
+            error: function(data){
+                $.growl.error({
+                    message: "please check Your details..."
+                });
+                $("#btn-save"). attr("disabled", false);
+            }
+        });
+    });
+
+    $('#form-rs').submit(function(e) {
+        e.preventDefault();
+        $("#btn-save"). attr("disabled", true);
+        var formData = new FormData(this);
+        $.ajax({
+            type:'POST',
+            url: '{{ route('rumah_sakit.store') }}',
+            data: formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                $("#btn-save").html('Submit');
+                $("#btn-save"). attr("disabled", false);
+                location.reload();
+            },
+            error: function(data){
+                $.growl.error({
+                    message: "please check Your details..."
+                });
+                $("#btn-save"). attr("disabled", false);
+            }
+        });
+    });
 
     $("#id_kategori").change(function() {
         if ($(this).val() == "0") {
-            $('.grup1, .grup2, .grup3, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10, .grup11, .grup12, .grup13, .grup14, .grup15').hide();
+            $('.grup1, .grup2, .grup3, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10, .grup11, .grup12, .grup13, .grup14').hide();
         } else if ($(this).val() == "1") {
-            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9, .grup13, .grup14').show();
-            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12, .grup15').hide();
+            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9, .grup13').show();
+            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12,  .grup14').hide();
             $('.nama').html('Nama Dokter');
             $('.npa_idi').html('NPA IDI');
             $('.no_sip').html('No. SIP');
         } else if ($(this).val() == "2") {
-            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9, .grup13, .grup14').show();
-            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12, .grup15').hide();
+            $('.grup1, .grup3, .grup5, .grup6, .grup7, .grup9, .grup13').show();
+            $('.grup2, .grup4, .grup8, .grup10, .grup11, .grup12, .grup14').hide();
             $('.nama').html('Nama Dokter');
             $('.npa_idi').html('NPA IDI/PDGI');
             $('.no_sip').html('No. SIP');
         } else if ($(this).val() == "3") {
-            $('.grup1, .grup4, .grup5, .grup8, .grup11, .grup13, .grup14').show();
-            $('.grup2, .grup3, .grup6, .grup7, .grup9, .grup10, .grup12, .grup15').hide();
+            $('.grup1, .grup4, .grup5, .grup8, .grup10, .grup11, .grup13').show();
+            $('.grup2, .grup3, .grup6, .grup7, .grup9, .grup12, .grup14').hide();
             $('.nama').html('Nama Lengkap');
         } else if ($(this).val() == "4") {
-            $('.grup1, .grup2, .grup4, .grup5, .grup6, .grup8, .grup10, .grup13, .grup14').show();
-            $('.grup3, .grup7, .grup9, .grup11, .grup12, .grup15').hide();
+            $('.grup1, .grup2, .grup4, .grup5, .grup6, .grup8, .grup10, .grup13').show();
+            $('.grup3, .grup7, .grup9, .grup11, .grup12, .grup14').hide();
             $('.nama').html('Nama Lengkap');
             $('.no_sib_sik').html('No. SIAA/SIK');
             $('.no_sip').html('No. SIPA');
             $('.ket_sib_sik').html('Keterangan SIPA/SIA/SIK')
         } else if ($(this).val() == "5") {
-            $('.grup1,.grup11, .grup12, .grup15').show();
-            $('.grup2,.grup4, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10, .grup13, .grup14').hide();
+            $('.grup1,.grup11, .grup12, .grup14').show();
+            $('.grup2,.grup4, .grup4, .grup5, .grup6, .grup7, .grup8, .grup9, .grup10, .grup13').hide();
             $('.nama').html('Nama Lengkap');
         }
     });
