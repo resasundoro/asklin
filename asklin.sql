@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.4.24-MariaDB, for Win64 (AMD64)
+-- MariaDB dump 10.19  Distrib 10.4.22-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: asklin
 -- ------------------------------------------------------
--- Server version	10.4.24-MariaDB
+-- Server version	10.4.22-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -145,7 +145,7 @@ CREATE TABLE `karyawan` (
   KEY `karyawan_id_kategori_foreign` (`id_kategori`),
   CONSTRAINT `karyawan_id_kategori_foreign` FOREIGN KEY (`id_kategori`) REFERENCES `m_karyawan` (`id`),
   CONSTRAINT `karyawan_id_klinik_foreign` FOREIGN KEY (`id_klinik`) REFERENCES `klinik` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,6 +154,7 @@ CREATE TABLE `karyawan` (
 
 LOCK TABLES `karyawan` WRITE;
 /*!40000 ALTER TABLE `karyawan` DISABLE KEYS */;
+INSERT INTO `karyawan` VALUES (1,1,'Dr Erna',1,'7263287632','7628736287','2626327','2021-12-31','628327362732',NULL,NULL,NULL,NULL,NULL,NULL,2,2,'2022-05-23 00:07:48','2022-05-23 00:07:48','20220523070748.jpg','20220523070748-628b32c46ada4.jpg',NULL),(2,1,'Dr Kazue',1,'7263287632','7628736287','2626327','2020-11-30','6281762736272',NULL,NULL,NULL,NULL,NULL,NULL,2,2,'2022-05-23 01:21:42','2022-05-23 01:21:42','20220523082142.jpg','20220523082142-628b44168a273.jpg',NULL),(3,1,'Dr Hendri',1,'82372832798','3827392873928','8372937298','2018-10-29','62572637227',NULL,NULL,NULL,NULL,NULL,NULL,2,2,'2022-05-23 01:55:41','2022-05-23 01:55:41','20220523085541.jpg','20220523085541-628b4c0d0738b.jpg',NULL),(4,1,'Dr Resa',2,'2763283627','72387528375287','72587253875387','2020-10-29','628327362732',NULL,NULL,NULL,NULL,NULL,NULL,2,2,'2022-05-23 02:57:33','2022-05-23 02:57:33','20220523095733.jpg','20220523095733-628b5a8db5df3.jpg',NULL),(5,1,'Dr Agus',2,'2767238723672','762836287','6726327','2022-12-31','62572637227',NULL,NULL,NULL,NULL,NULL,NULL,2,2,'2022-05-23 02:58:43','2022-05-23 02:58:43','20220523095843.jpg','20220523095843-628b5ad328027.jpg',NULL),(6,1,'Dr Tiara',3,NULL,'53725327',NULL,NULL,NULL,'2735723527','2021-11-29','Hello brother sister',NULL,'S1 Akuntansi',NULL,2,2,'2022-05-23 03:02:15','2022-05-23 03:02:15','20220523100215.jpg','20220523100215-628b5ba7e659b.jpg',NULL),(7,1,'Dr Candra',4,NULL,'372538273587','53725382587',NULL,NULL,'236872638726','2019-10-02','hello aja lah','Apoteker',NULL,NULL,2,2,'2022-05-23 03:04:50','2022-05-23 03:04:50','20220523100450.jpg','20220523100450-628b5c425d36e.jpg',NULL),(8,1,'Sundoro',5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017','Programmer',2,2,'2022-05-23 03:12:56','2022-05-23 03:12:56',NULL,NULL,'20220523101256.jpg');
 /*!40000 ALTER TABLE `karyawan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -589,7 +590,7 @@ CREATE TABLE `role_has_permissions` (
 
 LOCK TABLES `role_has_permissions` WRITE;
 /*!40000 ALTER TABLE `role_has_permissions` DISABLE KEYS */;
-INSERT INTO `role_has_permissions` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),(13,1),(14,1),(15,1),(16,1),(17,1),(18,1),(19,1),(20,1),(21,1),(22,1),(23,1),(24,1),(25,1),(26,1),(26,2),(26,3),(27,1),(27,3),(28,1),(28,3),(29,1),(29,3),(30,1),(31,1),(32,1),(33,1),(34,1),(35,1),(36,1),(37,1),(38,1),(39,1),(40,1),(41,1),(42,1),(43,1),(44,1),(45,1),(46,1),(47,1),(48,1),(49,1);
+INSERT INTO `role_has_permissions` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),(13,1),(14,1),(15,1),(16,1),(17,1),(18,1),(19,1),(20,1),(21,1),(22,1),(23,1),(24,1),(25,1),(26,1),(26,2),(26,3),(27,1),(27,3),(28,1),(28,3),(29,1),(29,3),(30,1),(31,1),(32,1),(33,1),(34,1),(34,3),(35,1),(35,3),(36,1),(36,3),(37,1),(37,3),(38,1),(38,3),(39,1),(39,3),(40,1),(40,3),(41,1),(41,3),(42,1),(42,3),(43,1),(43,3),(44,1),(44,3),(45,1),(45,3),(46,1),(47,1),(48,1),(49,1);
 /*!40000 ALTER TABLE `role_has_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -804,4 +805,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-23  6:32:03
+-- Dump completed on 2022-05-23 17:42:42
