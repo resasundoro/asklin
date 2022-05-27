@@ -49,7 +49,8 @@ class Ruang_KlinikController extends Controller
             $foto = date('YmdHis') . "-" . uniqid() . "." . $img->getClientOriginalExtension();
             $img->move($destinationPath, $foto);
         }else{
-            $foto = NULL;
+            $ruang = Ruang_klinik::find($id);
+            $foto = $ruang->foto;
         }
 
         $ID = $request->id;
@@ -75,7 +76,11 @@ class Ruang_KlinikController extends Controller
 
     public function destroy(Request $request)
     {
-        $data = Ruang_klinik::where('id',$request->id)->delete();
+        $file = Ruang_klinik::find($request->id);
+
+        unlink(public_path() .  '/images/klinik/ruang_klinik/' . $file->foto);
+
+        $data = Ruang_klinik::where('id',$file->id)->delete();
 
         return Response()->json($data);
     }

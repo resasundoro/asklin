@@ -56,7 +56,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Roles</label>
-                        {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                        {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}
                     </div>
                     <div class="form-group">
                         <label class="form-label">Password</label>

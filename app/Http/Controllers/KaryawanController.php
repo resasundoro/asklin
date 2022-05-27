@@ -107,7 +107,16 @@ class KaryawanController extends Controller
 
     public function destroy(Request $request)
     {
-        $data = Karyawan::where('id', $request->id)->delete();
+        $file = Karyawan::find($request->id);
+
+        if($file->foto_str || $file->foto_sip){
+            unlink(public_path() .  '/images/klinik/sdm/' . $file->foto_str);
+            unlink(public_path() .  '/images/klinik/sdm/' . $file->foto_sip);
+        } elseif($file->foto_ijazah){
+            unlink(public_path() .  '/images/klinik/sdm/' . $file->foto_ijazah);
+        }
+
+        $data = Karyawan::where('id',$file->id)->delete();
 
         return Response()->json($data);
     }

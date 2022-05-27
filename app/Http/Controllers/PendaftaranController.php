@@ -124,9 +124,9 @@ class PendaftaranController extends Controller
         $rs = Rumah_sakit::where('id_klinik', Auth::user()->id_klinik)->get();
         $asuransi = Asuransi::where('id_klinik', Auth::user()->id_klinik)->get();
         $mrk = M_ruang_klinik::all();
-        $rk = Ruang_klinik::join('m_ruang_klinik as mrk', 'ruang_klinik.id_ruang_klinik', '=', 'mrk.id')->select('ruang_klinik.foto', 'mrk.id as mrkid', 'mrk.ruang')->where('id_klinik', Auth::user()->id_klinik)->get();
+        $rk = Ruang_klinik::join('m_ruang_klinik as mrk', 'ruang_klinik.id_ruang_klinik', '=', 'mrk.id')->select('ruang_klinik.*', 'mrk.id as mrkid', 'mrk.ruang')->where('id_klinik', Auth::user()->id_klinik)->get();
         $mps = M_persyaratan::all();
-        $ps = Persyaratan::join('m_persyaratan as mps', 'persyaratan.id_persyaratan', '=', 'mps.id')->select('persyaratan.dokumen', 'mps.id as mpsid', 'mps.kategori')->where('id_klinik', Auth::user()->id_klinik)->get();
+        $ps = Persyaratan::join('m_persyaratan as mps', 'persyaratan.id_persyaratan', '=', 'mps.id')->select('persyaratan.*', 'mps.id as mpsid', 'mps.kategori')->where('id_klinik', Auth::user()->id_klinik)->get();
         return view('pendaftaran.sdm', compact('pj', 'dp', 'tp', 'tkl', 'tsl', 'rs', 'asuransi', 'mrk', 'rk', 'ps', 'mps'));
     }
 

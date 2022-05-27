@@ -47,7 +47,8 @@ class AsuransiController extends Controller
             $kerja = date('YmdHis') . "-" . uniqid() . "." . $kerjasama->getClientOriginalExtension();
             $kerjasama->move($destinationPath, $kerja);
         }else{
-            $kerja = NULL;
+            $asuransi = Asuransi::find($id);
+            $kerja = $asuransi->kerjasama;
         }
 
         $ID = $request->id;
@@ -76,7 +77,11 @@ class AsuransiController extends Controller
 
     public function destroy(Request $request)
     {
-        $data = Asuransi::where('id',$request->id)->delete();
+        $file = Asuransi::find($request->id);
+
+        unlink(public_path() .  '/images/klinik/asuransi/' . $file->kerjasama);
+
+        $data = Asuransi::where('id',$file->id)->delete();
 
         return Response()->json($data);
     }

@@ -49,7 +49,8 @@ class PersyaratanController extends Controller
             $foto = date('YmdHis') . "-" . uniqid() . "." . $img->getClientOriginalExtension();
             $img->move($destinationPath, $foto);
         }else{
-            $foto = NULL;
+            $persyaratan = Persyaratan::find($id);
+            $foto = $persyaratan->dokumen;
         }
 
         $ID = $request->id;
@@ -77,7 +78,11 @@ class PersyaratanController extends Controller
 
     public function destroy(Request $request)
     {
-        $data = Persyaratan::where('id',$request->id)->delete();
+        $file = Persyaratan::find($request->id);
+
+        unlink(public_path() .  '/images/klinik/syarat/' . $file->dokumen);
+
+        $data = Persyaratan::where('id',$file->id)->delete();
 
         return Response()->json($data);
     }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_klinik');
             $table->unsignedBigInteger('id_persyaratan');
             $table->text('dokumen')->nullable();
-            $table->enum('status', ['0', '1', '2', '3', '4', '5'])->nullable();
+            $table->enum('status', ['0', '1', '2', '3', '4', '5'])->default('0');
             $table->text('keterangan')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
