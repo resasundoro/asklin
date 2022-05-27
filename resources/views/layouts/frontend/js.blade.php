@@ -17,6 +17,19 @@
 <!-- Theme Base, Components and Settings -->
 <script src="{{ asset('frontend/js/theme.js') }}"></script>
 
+<!-- Admin Extension Specific Page Vendor -->
+<script src="{{ asset('frontend/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+<script>
+    // Bootstrap Datepicker No Conflict
+    if (typeof($.fn.datepicker) != 'undefined') {
+        $.fn.bootstrapDP = $.fn.datepicker.noConflict();
+    }
+</script>
+<script src="{{ asset('frontend/vendor/jquery-ui/jquery-ui.js') }}"></script>
+<script src="{{ asset('frontend/vendor/select2/js/select2.js') }}"></script>
+<script src="{{ asset('frontend/vendor/bootstrap-multiselect/js/bootstrap-multiselect.js') }}"></script>
+<script src="{{ asset('frontend/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js') }}"></script>
+
     <!-- Theme Custom -->
 <script src="{{ asset('frontend/js/custom.js') }}"></script>
 

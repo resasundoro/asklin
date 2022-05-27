@@ -40,6 +40,12 @@ class KaryawanController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'foto_str' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'foto_sip' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'foto_ijazah' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+
         if ($foto_str = $request->file('foto_str')) {
             $destinationPath = 'images/klinik/sdm/';
             $foto_STR = date('YmdHis') . "-" . uniqid() . "." . $foto_str->getClientOriginalExtension();
@@ -50,7 +56,7 @@ class KaryawanController extends Controller
 
         if ($foto_sip = $request->file('foto_sip')) {
             $destinationPath = 'images/klinik/sdm/';
-            $foto_SIP = date('YmdHis') . "." . $foto_sip->getClientOriginalExtension();
+            $foto_SIP = date('YmdHis') . "-" . uniqid() . "." . $foto_sip->getClientOriginalExtension();
             $foto_sip->move($destinationPath, $foto_SIP);
         }else{
             $foto_SIP = NULL;
@@ -58,7 +64,7 @@ class KaryawanController extends Controller
 
         if ($foto_ijazah = $request->file('foto_ijazah')) {
             $destinationPath = 'images/klinik/sdm/';
-            $foto_IJAZAH = date('YmdHis') . "." . $foto_ijazah->getClientOriginalExtension();
+            $foto_IJAZAH = date('YmdHis') . "-" . uniqid() . "." . $foto_ijazah->getClientOriginalExtension();
             $foto_ijazah->move($destinationPath, $foto_IJAZAH);
         }else{
             $foto_IJAZAH = NULL;

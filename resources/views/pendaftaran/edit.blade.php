@@ -23,11 +23,21 @@
         </div>
     </section>
 
-    <form action="{{ route('pendaftaran.update',$p->id) }}" role="form" class="needs-validation" method="POST">
+    <form action="{{ route('pendaftaran.update',$p->id) }}" role="form" class="needs-validation" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="container">
             <div class="row">
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="col">
                     <div class="alert alert-info alert-admin">
                         <div class="row">
@@ -74,34 +84,47 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Nama Klinik</label>
                         <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2" type="text" name="nama_klinik" value="{{ $p->nama_klinik }}" >
+                            <input class="form-control text-3 h-auto py-2" type="text" name="nama_klinik" value="{{ $p->nama_klinik }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Nama Kontak/ penganggung jawab</label>
+                        <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Logo Klinik</label>
                         <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2" type="text" name="nama_pendaftar" value="{{ $p->nama_pendaftar }}" >
+                            <input class="form-control" type="file" name="logo_klinik" value="{{ $p->logo_klinik }}">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Email</label>
-                        <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2" type="email" name="email_pendaftar" value="{{ $p->email_pendaftar }}" >
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">No Telpon</label>
-                        <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2" type="number" name="tlf_pendaftar" value="{{ $p->tlf_pendaftar }}" >
-                        </div>
+                        @if(isset($p->logo_klinik))
+                            <img src="{{ asset('/images/klinik/'.$p->logo_klinik) }}" style="max-width: 300px">
+                        @else
+                            <span class="badge badge-danger badge-md">Logo Belum Di Upload</span>
+                        @endif
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-6">
                     <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Nama Kontak / Penanggung Jawab</label>
+                        <div class="col-lg-9">
+                            <input class="form-control text-3 h-auto py-2" type="text" name="nama_pendaftar" value="{{ $p->nama_pendaftar }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Email</label>
+                        <div class="col-lg-9">
+                            <input class="form-control text-3 h-auto py-2" type="email" name="email_pendaftar" value="{{ $p->email_pendaftar }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">No Telpon</label>
+                        <div class="col-lg-9">
+                            <input class="form-control text-3 h-auto py-2" type="number" name="tlf_pendaftar" value="{{ $p->tlf_pendaftar }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Status Pendaftar</label>
                         <div class="col-lg-9">
-                            <select class="form-select form-control h-auto" data-msg-="status_pendaftar" name="status_pendaftar" >
+                            <select class="form-select form-control h-auto" data-msg-="status_pendaftar" name="status_pendaftar">
                                 <option value="Pemilik" {{ $p->status_pendaftar == 'Pemilik'  ? 'selected' : '' }}>Pemilik</option>
                                 <option value="Penanggung Jawab" {{ $p->status_pendaftar == 'Penanggung Jawab'  ? 'selected' : '' }}>Penanggung Jawab</option>
                                 <option value="Pemilik & Penanggung Jawab" {{ $p->status_pendaftar == 'Pemilik & Penanggung Jawab'  ? 'selected' : '' }}>Pemilik & Penanggung Jawab</option>
@@ -112,19 +135,19 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">No Ijin Klinik</label>
                         <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2" type="text" name="no_ijin_klinik" value="{{ $p->no_ijin_klinik }}" >
+                            <input class="form-control text-3 h-auto py-2" type="text" name="no_ijin_klinik" value="{{ $p->no_ijin_klinik }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Tgl.Terbit Ijin</label>
                         <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2 fc-datepicker" type="text" name="tgl_terbit_ijin_klinik" value="{{ $p->tgl_terbit_ijin_klinik }}" >
+                            <input class="form-control text-3 h-auto py-2 fc-datepicker" type="text" name="tgl_terbit_ijin_klinik" value="{{ $p->tgl_terbit_ijin_klinik }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Masa Berlaku s/d</label>
                         <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2 fc-datepicker" type="text" name="masa_berlaku_ijin_klinik" value="{{ $p->masa_berlaku_ijin_klinik }}" >
+                            <input class="form-control text-3 h-auto py-2 fc-datepicker" type="text" name="masa_berlaku_ijin_klinik" value="{{ $p->masa_berlaku_ijin_klinik }}">
                         </div>
                     </div>
                 </div>
@@ -142,13 +165,13 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Nama pemilik klinik</label>
                         <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2" type="text" name="nama_pemilik" value="{{ $p->nama_pemilik }}" >
+                            <input class="form-control text-3 h-auto py-2" type="text" name="nama_pemilik" value="{{ $p->nama_pemilik }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Jenis klinik</label>
                         <div class="col-lg-9">
-                            <select class="form-select form-control h-auto" data-msg-="jenis_klinik" name="jenis_klinik"  id="jenis_klinik" >
+                            <select class="form-select form-control h-auto" data-msg-="jenis_klinik" name="jenis_klinik"  id="jenis_klinik">
                                 <option value="Utama" {{ $p->jenis_klinik == 'Utama'  ? 'selected' : '' }}>Utama</option>
                                 <option value="Pratama" {{ $p->jenis_klinik == 'Pratama'  ? 'selected' : '' }}>Pratama</option>
                             </select>
@@ -157,7 +180,7 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Status Kepemilikan Klinik</label>
                         <div class="col-lg-9">
-                            <select class="form-select form-control h-auto" data-msg-="status_kepemilikan_klinik" name="status_kepemilikan_klinik" id="status_kepemilikan_klinik" >
+                            <select class="form-select form-control h-auto" data-msg-="status_kepemilikan_klinik" name="status_kepemilikan_klinik" id="status_kepemilikan_klinik">
                                 <option value="Perorangan" {{ $p->status_kepemilikan_klinik == 'Perorangan'  ? 'selected' : '' }}>Perorangan</option>
                                 <option value="Badan Usaha" {{ $p->status_kepemilikan_klinik == 'Badan Usaha'  ? 'selected' : '' }}>Badan Usaha</option>
                                 <option value="Badan Hukum" {{ $p->status_kepemilikan_klinik == 'Badan Hukum'  ? 'selected' : '' }}>Badan Hukum</option>
@@ -191,35 +214,35 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Alamat</label>
                         <div class="col-lg-9">
-                            <textarea maxlength="5000" data-msg-="Please enter your address" rows="4" class="form-control text-3 h-auto py-2" name="alamat_klinik" >{{ $p->alamat_klinik }}</textarea>
+                            <textarea maxlength="5000" data-msg-="Please enter your address" rows="4" class="form-control text-3 h-auto py-2" name="alamat_klinik">{{ $p->alamat_klinik }}</textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="form-label mb-1 text-2">RT</label>
-                            <input type="text" data-msg-="" maxlength="100" class="form-control text-3 h-auto py-2" name="rt" value="{{ $p->rt }}" >
+                            <input type="text" data-msg-="" maxlength="100" class="form-control text-3 h-auto py-2" name="rt" value="{{ $p->rt }}">
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="form-label mb-1 text-2">RW</label>
-                            <input type="text" data-msg-="" data-msg-email="RW" maxlength="100" class="form-control text-3 h-auto py-2" name="rw" value="{{ $p->rw }}" >
+                            <input type="text" data-msg-="" data-msg-email="RW" maxlength="100" class="form-control text-3 h-auto py-2" name="rw" value="{{ $p->rw }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Kode POS</label>
                         <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2" type="text" name="kode_pos" value="{{ $p->kode_pos }}" >
+                            <input class="form-control text-3 h-auto py-2" type="text" name="kode_pos" value="{{ $p->kode_pos }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Telpon Klinik</label>
                         <div class="col-lg-9">
-                            <input class="form-control text-3 h-auto py-2" type="text" name="tlf_klinik" value="{{ $p->tlf_klinik }}" >
+                            <input class="form-control text-3 h-auto py-2" type="text" name="tlf_klinik" value="{{ $p->tlf_klinik }}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Provinsi</label>
                         <div class="col-lg-9">
-                            <select class="form-select form-control h-auto" data-msg-="provinsi" name="provinsi" id="provinsi" >
+                            <select class="form-select form-control h-auto" data-msg-="provinsi" name="provinsi" id="provinsi">
                                 <option>==Pilih Provinsi==</option>
                                 @foreach ($provinsi as $prov)
                                     <option value="{{ $prov->id }}" {{ $p->provinsi == $prov->id  ? 'selected' : '' }}>{{ $prov->name }}</option>
@@ -230,7 +253,7 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Kabupaten / Kota</label>
                         <div class="col-lg-9">
-                            <select class="form-select form-control h-auto" data-msg-="kota" name="kota" id="kota" >
+                            <select class="form-select form-control h-auto" data-msg-="kota" name="kota" id="kota">
                                 @foreach ($kota as $k)
                                     <option value="{{ $k->id }}" {{ $p->kota == $k->id  ? 'selected' : '' }}>{{ $k->name }}</option>
                                 @endforeach
@@ -240,7 +263,7 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Kecamatan</label>
                         <div class="col-lg-9">
-                            <select class="form-select form-control h-auto" data-msg-="kecamatan" name="kecamatan" id="kecamatan" >
+                            <select class="form-select form-control h-auto" data-msg-="kecamatan" name="kecamatan" id="kecamatan">
                                 @foreach ($kecamatan as $k)
                                     <option value="{{ $k->id }}" {{ $p->kecamatan == $k->id  ? 'selected' : '' }}>{{ $k->name }}</option>
                                 @endforeach
@@ -250,7 +273,7 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-form-label form-control-label line-height-9 pt-2 text-2 ">Kelurahan</label>
                         <div class="col-lg-9">
-                            <select class="form-select form-control h-auto" data-msg-="Kelurahan" name="kelurahan" id="kelurahan" >
+                            <select class="form-select form-control h-auto" data-msg-="Kelurahan" name="kelurahan" id="kelurahan">
                                 @foreach ($kelurahan as $k)
                                     <option value="{{ $k->id }}" {{ $p->kelurahan == $k->id  ? 'selected' : '' }}>{{ $k->name }}</option>
                                 @endforeach
@@ -376,12 +399,6 @@
 
 <script>
     $(function(e) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
         $('#provinsi').on('change', function(){
             let id_provinsi = $('#provinsi').val();
 

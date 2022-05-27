@@ -19,6 +19,7 @@ class Klinik extends Model
      * @var array
      */
     protected $fillable = [
+        'no_peserta',
         'asklin',
         'no_anggota',
         'logo_klinik',

@@ -20,29 +20,31 @@
                     <a class="side-menu__item {{Request::is('dashboard') ? 'active' : ''}}" data-bs-toggle="slide" href="{{ route('dashboard') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
                 </li>
 
-                @can('klinik-list')
-                    <li class="slide {{Request::is('klinik') ? 'is-expanded' : ''}}">
-                        <a class="side-menu__item {{Request::is('klinik') ? 'active' : ''}}" data-bs-toggle="slide" href="{{ url('klinik') }}"><i class="side-menu__icon fe fe-octagon"></i><span class="side-menu__label">Klinik</span></a>
-                    </li>
-                @endcan
-
-                @can('karyawan-list')
-                    <li class="slide {{Request::is('karyawan') ? 'is-expanded' : ''}}">
-                        <a class="side-menu__item {{Request::is('karyawan') ? 'active' : ''}}" data-bs-toggle="slide" href="{{ url('karyawan') }}"><i class="side-menu__icon fe fe-user"></i><span class="side-menu__label">SDM</span></a>
-                    </li>
-                @endcan
-
-                @can('rumah-sakit-list')
-                    <li class="slide {{Request::is('rumah_sakit') ? 'is-expanded' : ''}}">
-                        <a class="side-menu__item {{Request::is('rumah_sakit') ? 'active' : ''}}" data-bs-toggle="slide" href="{{ url('rumah_sakit') }}"><i class="side-menu__icon fe fe-heart"></i><span class="side-menu__label">Rumah Sakit Terdekat</span></a>
-                    </li>
-                @endcan
-
-                @can('asuransi-list')
-                    <li class="slide {{Request::is('asuransi') ? 'is-expanded' : ''}}">
-                        <a class="side-menu__item {{Request::is('asuransi') ? 'active' : ''}}" data-bs-toggle="slide" href="{{ url('asuransi') }}"><i class="side-menu__icon fe fe-crosshair"></i><span class="side-menu__label">Provider Asuransi</span></a>
-                    </li>
-                @endcan
+                <li class="slide {{Request::is(['klinik', 'karyawan', 'rumah_sakit', 'asuransi', 'ruang_klinik', 'persyaratan']) ? 'is-expanded' : ''}}">
+                    <a class="side-menu__item {{Request::is(['klinik', 'karyawan', 'rumah_sakit', 'asuransi', 'ruang_klinik', 'persyaratan']) ? 'active is-expanded' : ''}}" data-bs-toggle="slide" href="javascript:void(0)">
+                        <i class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Peserta</span><i class="angle fe fe-chevron-right"></i>
+                    </a>
+                    <ul class="slide-menu {{Request::is(['klinik', 'karyawan', 'rumah_sakit', 'asuransi', 'ruang_klinik', 'persyaratan']) ? 'open' : ''}}">
+                        @can('klinik-list')
+                            <li><a href="{{ url('klinik') }}" class="slide-item {{Request::is('klinik') ? 'active' : ''}}">Klinik</a></li>
+                        @endcan
+                        @can('karyawan-list')
+                            <li><a href="{{ url('karyawan') }}" class="slide-item {{Request::is('karyawan') ? 'active' : ''}}">SDM</a></li>
+                        @endcan
+                        @can('rumah-sakit-list')
+                            <li><a href="{{ url('rumah_sakit') }}" class="slide-item {{Request::is('rumah_sakit') ? 'active' : ''}}">Rumah Sakit Terdekat</a></li>
+                        @endcan
+                        @can('asuransi-list')
+                            <li><a href="{{ url('asuransi') }}" class="slide-item {{Request::is('asuransi') ? 'active' : ''}}">Asuransi</a></li>
+                        @endcan
+                        @can('ruang-klinik-list')
+                            <li><a href="{{ url('ruang_klinik') }}" class="slide-item {{Request::is('ruang_klinik') ? 'active' : ''}}">Ruang Klinik</a></li>
+                        @endcan
+                        @can('persyaratan-list')
+                            <li><a href="{{ url('persyaratan') }}" class="slide-item {{Request::is('persyaratan') ? 'active' : ''}}">Dokumen Persyaratan</a></li>
+                        @endcan
+                    </ul>
+                </li>
 
                 @can('surveyor-list')
                     <li class="slide {{Request::is('surveyor') ? 'is-expanded' : ''}}">
@@ -50,20 +52,18 @@
                     </li>
                 @endcan
 
-                @can(['paket-list', 'm-kriteria-klinik-list', 'm-fasilitas-klinik-list', 'm-layanan-klinik-list', 'm-karyawan-list'])
-                    <li class="slide {{Request::is(['paket', 'kriteria_klinik', 'fasilitas_klinik', 'layanan_klinik', 'm_karyawan']) ? 'is-expanded' : ''}}">
-                        <a class="side-menu__item {{Request::is(['paket', 'kriteria_klinik', 'fasilitas_klinik', 'layanan_klinik', 'm_karyawan']) ? 'active is-expanded' : ''}}" data-bs-toggle="slide" href="javascript:void(0)">
-                            <i class="side-menu__icon fe fe-database"></i><span class="side-menu__label">Master Data</span><i class="angle fe fe-chevron-right"></i>
-                        </a>
-                        <ul class="slide-menu {{Request::is(['paket', 'kriteria_klinik', 'fasilitas_klinik', 'layanan_klinik', 'm_karyawan']) ? 'open' : ''}}">
-                            <li><a href="{{ url('paket') }}" class="slide-item {{Request::is('paket') ? 'active' : ''}}">Harga Paket</a></li>
-                            <li><a href="{{ url('kriteria_klinik') }}" class="slide-item {{Request::is('kriteria_klinik') ? 'active' : ''}}">Kriteria Klinik</a></li>
-                            <li><a href="{{ url('fasilitas_klinik') }}" class="slide-item {{Request::is('fasilitas_klinik') ? 'active' : ''}}">Fasilitas Klinik</a></li>
-                            <li><a href="{{ url('layanan_klinik') }}" class="slide-item {{Request::is('layanan_klinik') ? 'active' : ''}}">Layanan Klinik</a></li>
-                            <li><a href="{{ url('m_karyawan') }}" class="slide-item {{Request::is('m_karyawan') ? 'active' : ''}}">Kategori Karyawan</a></li>
-                        </ul>
-                    </li>
-                @endcan
+                <li class="slide {{Request::is(['kriteria_klinik', 'fasilitas_klinik', 'm_ruang_klinik', 'm_karyawan', 'm-persyaratan-list']) ? 'is-expanded' : ''}}">
+                    <a class="side-menu__item {{Request::is(['kriteria_klinik', 'fasilitas_klinik', 'm_karyawan', 'm-persyaratan-list']) ? 'active is-expanded' : ''}}" data-bs-toggle="slide" href="javascript:void(0)">
+                        <i class="side-menu__icon fe fe-database"></i><span class="side-menu__label">Master Data</span><i class="angle fe fe-chevron-right"></i>
+                    </a>
+                    <ul class="slide-menu {{Request::is(['kriteria_klinik', 'fasilitas_klinik', 'm_ruang_klinik', 'm_karyawan', 'm-persyaratan-list']) ? 'open' : ''}}">
+                        <li><a href="{{ url('kriteria_klinik') }}" class="slide-item {{Request::is('kriteria_klinik') ? 'active' : ''}}">Kriteria Klinik</a></li>
+                        <li><a href="{{ url('fasilitas_klinik') }}" class="slide-item {{Request::is('fasilitas_klinik') ? 'active' : ''}}">Fasilitas Klinik</a></li>
+                        <li><a href="{{ url('m_ruang_klinik') }}" class="slide-item {{Request::is('m_ruang_klinik') ? 'active' : ''}}">Ruang Klinik</a></li>
+                        <li><a href="{{ url('m_karyawan') }}" class="slide-item {{Request::is('m_karyawan') ? 'active' : ''}}">Kategori Karyawan</a></li>
+                        <li><a href="{{ url('m_persyaratan') }}" class="slide-item {{Request::is('m_persyaratan') ? 'active' : ''}}">Kategori Persyaratan Izin</a></li>
+                    </ul>
+                </li>
 
                 @can(['user-list', 'role-list'])
                     <li class="sub-category">

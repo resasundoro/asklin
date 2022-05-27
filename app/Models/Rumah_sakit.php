@@ -19,6 +19,6 @@ class Rumah_sakit extends Model
      * @var array
      */
     protected $fillable = [
-        'id_klinik', 'rs', 'alamat', 'id_provinsi', 'id_kota', 'tlf', 'jarak'
+        'id_klinik', 'rs', 'alamat', 'tlf', 'jarak'
     ];
 }

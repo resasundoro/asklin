@@ -47,11 +47,20 @@
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 @if ($message = Session::get('success'))
     <script>
+        var dipo = document.getElementById("success");
         $.growl.notice({
-            title: 'Pemberitahuan',
-            message: "Data berhasil diperbarui."
+            title: 'Berhasil',
+            message: dipo.innerHTML
         });
     </script>
+@elseif (count($errors) > 0)
+<script>
+    var dip = document.getElementById("error");
+    $.growl.notice({
+        title: 'Terjadi kesalahan',
+        message : dip.innerHTML
+    });
+</script>
 @endif
 
 @yield('js')

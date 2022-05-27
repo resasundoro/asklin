@@ -21,7 +21,7 @@
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">No</th>
-                                <th class="border-bottom-0">ID Anggota</th>
+                                <th class="border-bottom-0">No Peserta</th>
                                 <th class="border-bottom-0">Klinik</th>
                                 <th class="border-bottom-0">Pemilik</th>
                                 <th class="border-bottom-0">Jenis</th>
@@ -226,15 +226,86 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="form-label">Layanan Klinik</div>
-                                    <div class="row">
-                                        @foreach($layanan as $l)
-                                            <div class="col-auto">
+                                        <div class="row">
+                                            <div class="col-auto c1">
                                                 <label class="custom-control custom-checkbox-md">
-                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="{{ $l->id }}">
-                                                    <span class="custom-control-label">{{ $l->layanan }}</span>
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="1">
+                                                    <span class="custom-control-label">Akupuntur</span>
                                                 </label>
                                             </div>
-                                        @endforeach
+                                            <div class="col-auto c2">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="2">
+                                                    <span class="custom-control-label">Bedah</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c3">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="3">
+                                                    <span class="custom-control-label">Gigi</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c4">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="4"}>
+                                                    <span class="custom-control-label">Kebidanan</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c5">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="5">
+                                                    <span class="custom-control-label">Penyakit Dalam</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c6">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="6">
+                                                    <span class="custom-control-label">Rehabilitasi Medik</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c7">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="7">
+                                                    <span class="custom-control-label">Umum</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c8">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="8">
+                                                    <span class="custom-control-label">Anak</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c9">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="9">
+                                                    <span class="custom-control-label">Estetika</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c10">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="10">
+                                                    <span class="custom-control-label">Hemodialisa</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c11">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="11">
+                                                    <span class="custom-control-label">Mata</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c12">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="12">
+                                                    <span class="custom-control-label">Persalinan 24 Jam</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-auto c13">
+                                                <label class="custom-control custom-checkbox-md">
+                                                    <input type="checkbox" class="custom-control-input" name="layanan[]" value="13">
+                                                    <span class="custom-control-label">THT</span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -284,7 +355,7 @@
             ajax: '{{ route('klinik.list') }}',
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'no_anggota', name: 'no_anggota'},
+                {data: 'no_peserta', name: 'no_peserta'},
                 {data: 'nama_klinik', name: 'nama_klinik'},
                 {data: 'nama_pemilik', name: 'nama_pemilik'},
                 {data: 'jenis_klinik', name: 'jenis_klinik'},
@@ -463,5 +534,15 @@
         }
     });
     $("#status_kepemilikan_klinik").trigger("change");
+
+    $("#jenis_klinik").change(function() {
+        if ($(this).val() == "Utama") {
+            $('#c1, #c2, #c3, #c4, #c5, #c6, #c7, #c8, #c9, #c10, #c11, #c12, #c13').show();
+        } else if ($(this).val() == "Pratama") {
+            $('#c8, #c3, #c7, #c12, #c9, #c4, #c6').show();
+            $('#c1, #c2, #c5, #c10, #c11, #c13').hide();
+        }
+    });
+    $("#jenis_klinik").trigger("change");
 </script>
 @endsection

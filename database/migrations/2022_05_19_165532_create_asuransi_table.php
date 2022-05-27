@@ -18,18 +18,14 @@ return new class extends Migration
             $table->unsignedBigInteger('id_klinik');
             $table->string('asuransi');
             $table->string('alamat');
-            $table->string('id_provinsi');
-            $table->string('id_kota');
             $table->string('kontak');
             $table->string('tlf');
+            $table->text('kerjasama');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
             $table->foreign('id_klinik')->references('id')->on('klinik');
-
-            $table->foreign('id_provinsi')->references('id')->on('provinces');
-            $table->foreign('id_kota')->references('id')->on('regencies');
         });
     }
 

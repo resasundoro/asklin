@@ -237,6 +237,7 @@
                 $('#tgl_akhir_sip').val(data.tgl_akhir_sip);
                 $('#no_tlf').val(data.no_tlf);
                 $('#no_sib_sik').val(data.no_sib_sik);
+                $('#no_sip').val(data.no_sip);
                 $('#tgl_akhir_str').val(data.tgl_akhir_str);
                 $('#ket_sib_sik').val(data.ket_sib_sik);
                 $('#farmasi_apoteker').val(data.farmasi_apoteker);

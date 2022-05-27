@@ -7,18 +7,39 @@ use App\Models\M_kriteria_klinik;
 use App\Models\M_fasilitas_klinik;
 use App\Models\Karyawan;
 use App\Models\Rumah_sakit;
+use App\Models\Asuransi;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\District;
 use App\Models\Village;
+use App\Models\M_ruang_klinik;
+use App\Models\Ruang_klinik;
+use App\Models\M_persyaratan;
+use App\Models\Persyaratan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-    
+
 class PendaftaranController extends Controller
 {
     public function index()
     {
-        return view('pendaftaran.index');
+        $k = Klinik::join('villages as v', 'klinik.kelurahan', '=', 'v.id')
+            ->join('districts as d', 'klinik.kecamatan', '=', 'd.id')
+            ->join('regencies as r', 'klinik.kota', '=', 'r.id')
+            ->join('provinces as p', 'klinik.provinsi', '=', 'p.id')
+            ->select('klinik.*', 'v.id as vid', 'v.name as nama_kelurahan', 'd.id as did', 'd.name as nama_kecamatan', 'r.id as rid', 'r.name as nama_kota', 'p.id as pid', 'p.name as nama_provinsi')
+            ->find(Auth::user()->id_klinik);
+        $mfk = M_fasilitas_klinik::all();
+        $pj = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 1]])->get();
+        $dp = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 2]])->get();
+        $tp = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 3]])->get();
+        $tkl = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 4]])->get();
+        $tsl = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 5]])->get();
+        $rs = Rumah_sakit::where('id_klinik', Auth::user()->id_klinik)->get();
+        $asuransi = Asuransi::where('id_klinik', Auth::user()->id_klinik)->get();
+        $rk = Ruang_klinik::join('m_ruang_klinik as mrk', 'ruang_klinik.id_ruang_klinik', '=', 'mrk.id')->select('ruang_klinik.foto', 'mrk.id as mrkid', 'mrk.ruang')->where('id_klinik', Auth::user()->id_klinik)->get();
+        $ps = Persyaratan::join('m_persyaratan as mps', 'persyaratan.id_persyaratan', '=', 'mps.id')->select('persyaratan.dokumen', 'mps.id as mpsid', 'mps.kategori')->where('id_klinik', Auth::user()->id_klinik)->get();
+        return view('pendaftaran.index', compact('k', 'pj', 'dp', 'tp', 'tkl', 'tsl', 'rs', 'asuransi', 'rk', 'ps', 'mfk'));
     }
 
     public function edit()
@@ -37,12 +58,21 @@ class PendaftaranController extends Controller
     {
         $request->validate([
             'nama_klinik' => 'required',
-            'logo_klinik' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'logo_klinik' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
 
         $kriteria = implode(",", $request->kriteria);
         $fasilitas = implode(",", $request->fasilitas);
         $layanan = implode(",", $request->layanan);
+
+        if ($logo_klinik = $request->file('logo_klinik')) {
+            $destinationPath = 'images/klinik';
+            $profilKlinik = date('YmdHis') . "-" . uniqid() . "." . $logo_klinik->getClientOriginalExtension();
+            $logo_klinik->move($destinationPath, $profilKlinik);
+        } else {
+            $klinik = Klinik::find($id);
+            $profilKlinik = $klinik->logo_klinik;
+        }
 
         $klinik = Klinik::find($id);
         $klinik->update(
@@ -51,6 +81,7 @@ class PendaftaranController extends Controller
                 'asklin' => $request->asklin,
                 'no_anggota' => $request->no_anggota,
                 'nama_klinik' => $request->nama_klinik,
+                'logo_klinik' => $profilKlinik,
                 'no_ijin_klinik' => $request->no_ijin_klinik,
                 'tgl_terbit_ijin_klinik' => $request->tgl_terbit_ijin_klinik,
                 'masa_berlaku_ijin_klinik' => $request->masa_berlaku_ijin_klinik,
@@ -76,6 +107,7 @@ class PendaftaranController extends Controller
                 'kriteria' => $kriteria,
                 'fasilitas' => $fasilitas,
                 'layanan' => $layanan,
+                'status' => "Waiting"
             ]
         );
 
@@ -90,6 +122,23 @@ class PendaftaranController extends Controller
         $tkl = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 4]])->get();
         $tsl = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 5]])->get();
         $rs = Rumah_sakit::where('id_klinik', Auth::user()->id_klinik)->get();
-        return view('pendaftaran.sdm', compact('pj', 'dp', 'tp', 'tkl', 'tsl', 'rs'));
+        $asuransi = Asuransi::where('id_klinik', Auth::user()->id_klinik)->get();
+        $mrk = M_ruang_klinik::all();
+        $rk = Ruang_klinik::join('m_ruang_klinik as mrk', 'ruang_klinik.id_ruang_klinik', '=', 'mrk.id')->select('ruang_klinik.foto', 'mrk.id as mrkid', 'mrk.ruang')->where('id_klinik', Auth::user()->id_klinik)->get();
+        $mps = M_persyaratan::all();
+        $ps = Persyaratan::join('m_persyaratan as mps', 'persyaratan.id_persyaratan', '=', 'mps.id')->select('persyaratan.dokumen', 'mps.id as mpsid', 'mps.kategori')->where('id_klinik', Auth::user()->id_klinik)->get();
+        return view('pendaftaran.sdm', compact('pj', 'dp', 'tp', 'tkl', 'tsl', 'rs', 'asuransi', 'mrk', 'rk', 'ps', 'mps'));
+    }
+
+    public function draft(Request $request)
+    {
+        $data = Klinik::find(Auth::user()->id_klinik)->update(['status' => "Create Dokter"]);
+        return redirect()->route('pendaftaran')->with('success','Status Pendaftaran Anda "Create Dokter"');
+    }
+
+    public function submit(Request $request)
+    {
+        $data = Klinik::find(Auth::user()->id_klinik)->update(['status' => "Selesai Input"]);
+        return redirect()->route('pendaftaran')->with('success','Status Pendaftaran Anda "Create Dokter"');
     }
 }

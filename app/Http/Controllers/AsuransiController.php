@@ -6,8 +6,6 @@ use App\Models\Asuransi;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\Klinik;
-use App\Models\Province;
-use App\Models\Regency;
 
 class AsuransiController extends Controller
 { 
@@ -21,18 +19,14 @@ class AsuransiController extends Controller
 
     public function index()
     {
-        $provinsi = Province::all();
-        $kota = Regency::all();
         $klinik = Klinik::all();
-        return view('asuransi.index', compact('provinsi', 'kota', 'klinik'));
+        return view('asuransi.index', compact('klinik'));
     }
 
     public function getAsuransi(Request $request)
     {
         $data = Asuransi::join('klinik as k', 'asuransi.id_klinik', '=', 'k.id')
-                            ->join('provinces as p', 'asuransi.id_provinsi', '=', 'p.id')
-                            ->join('regencies as r', 'asuransi.id_kota', '=', 'r.id')
-                            ->select(['asuransi.*', 'k.id as kid', 'k.nama_klinik', 'p.id as pid', 'p.name as nama_provinsi', 'r.id as rid', 'r.name as nama_kota'])
+                            ->select(['asuransi.*', 'k.id as kid', 'k.nama_klinik'])
                             ->latest()->get();
         return Datatables::of($data)
             ->addIndexColumn()
@@ -43,6 +37,18 @@ class AsuransiController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'asuransi' => 'required',
+            'kerjasama' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+
+        if ($kerjasama = $request->file('kerjasama')) {
+            $destinationPath = 'images/klinik/asuransi/';
+            $kerja = date('YmdHis') . "-" . uniqid() . "." . $kerjasama->getClientOriginalExtension();
+            $kerjasama->move($destinationPath, $kerja);
+        }else{
+            $kerja = NULL;
+        }
 
         $ID = $request->id;
         $data = Asuransi::updateOrCreate(
@@ -51,10 +57,9 @@ class AsuransiController extends Controller
                 'id_klinik' => $request->id_klinik,
                 'asuransi' => $request->asuransi,
                 'alamat' => $request->alamat,
-                'id_provinsi' => $request->id_provinsi,
-                'id_kota' => $request->id_kota,
                 'kontak' => $request->kontak,
-                'tlf' => $request->tlf
+                'tlf' => $request->tlf,
+                'kerjasama' => $kerja
             ]
         );
 

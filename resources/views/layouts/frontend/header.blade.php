@@ -17,15 +17,9 @@
                             <div class="header-nav-main header-nav-main-square header-nav-main-effect-2 header-nav-main-sub-effect-1">
                                 <nav class="collapse header-mobile-border-top">
                                     <ul class="nav nav-pills" id="mainNav">
-                                        <li>
-                                        <a class="dropdown-item" href="{{ route('home') }}">
-                                            Beranda
-                                        </a>
-                                    </li>
-                                    <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle" href="#">
-                                                Tentang Kami
-                                            </a>
+                                        <li><a class="dropdown-item" href="{{ route('home') }}">Beranda</a></li>
+                                        <li class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Tentang Kami</a>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="tentang-kami.html">Sejarah Dan Fungsi ASKI</a></li>
                                                 <li><a class="dropdown-item" href="404.html">Struktur Organisasi</a></li>
@@ -34,10 +28,8 @@
                                                 <li><a class="dropdown-item" href="event.html">Event</a></li>
                                             </ul>
                                         </li>
-                                    <li class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle" href="#">
-                                                Tentang Akreditasi
-                                            </a>
+                                        <li class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Tentang Akreditasi</a>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="404.html">Instrumen Akreditasi</a></li>
                                                 <li><a class="dropdown-item" href="404.html">Alur Tahapan Akreditasi</a></li>
@@ -46,22 +38,32 @@
                                                 <li><a class="dropdown-item" href="404.html">Jadwal Diklat</a></li>
                                             </ul>
                                         </li>
-                                    
-                                    <li>
-                                        <a class="dropdown-item" href="karir.html">
-                                            Karir 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="kontak-kami.html">
-                                            Kontak Kami 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="register.html">
-                                            Pendaftaran Aski 
-                                        </a>
-                                    </li>
+                                        <li><a class="dropdown-item" href="karir.html">Karir</a></li>
+                                        <li><a class="dropdown-item" href="kontak-kami.html">Kontak Kami</a></li>
+                                        @guest
+                                            <li><a class="dropdown-item" href="{{ route('register') }}">Pendaftaran Aski</a></li>
+                                        @else
+                                        <li class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Panel {{ '('.Auth::user()->name.')' }}</a>
+                                            <ul class="dropdown-menu">
+                                                @if(Auth::user()->hasRole('Peserta'))
+                                                    <li class="dropdown-item"><a class="dropdown-item" href="{{ route('pendaftaran') }}">User Akreditasi</a></li>
+                                                    <li class="dropdown-item"><a class="dropdown-item" href="{{ route('status_akreditasi') }}">Status Formulir</a></li>
+                                                    <li class="dropdown-item"><a class="dropdown-item" href="{{ route('pendaftaran') }}">Timeline</a></li>
+                                                    <li class="dropdown-item"><a class="dropdown-item" href="{{ route('pendaftaran') }}">Billing & Invoice</a></li>
+                                                    <li class="dropdown-item"><a class="dropdown-item" href="{{ route('user_profil') }}">My Profile</a></li>
+                                                @else
+                                                    <li class="dropdown-item"><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li>
+                                                @endif
+                                                <li class="dropdown-item">
+                                                    <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                        @csrf
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        @endguest
                                     </ul>
                                 </nav>
                             </div>

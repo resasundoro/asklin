@@ -50,12 +50,14 @@
                     </div>
                     <div class="form-group">
                         <strong>Permission:</strong>
-                        <br/>
-                        @foreach($permission as $value)
-                            <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'id' => 'permission')) }}
-                            {{ $value->name }}</label>
-                            <br/>
-                        @endforeach
+                        <div class="row">
+                            @foreach($permission as $value)
+                                <div class="col-auto">
+                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name', 'id' => 'permission')) }}
+                                    {{ $value->name }}</label>
+                                </div>
+                            @endforeach
+                        </div
                     </div>
                 </div>
                 <div class="modal-footer">

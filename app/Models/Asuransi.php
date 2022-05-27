@@ -19,6 +19,6 @@ class Asuransi extends Model
      * @var array
      */
     protected $fillable = [
-        'id_klinik', 'asuransi', 'alamat', 'id_provinsi', 'id_kota', 'kontak', 'tlf'
+        'id_klinik', 'asuransi', 'alamat', 'kontak', 'tlf', 'kerjasama'
     ];
 }

@@ -65,7 +65,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $id_klinik = Klinik::create();
+        $id_klinik = Klinik::create(
+            [
+                'no_peserta' => date('Y/m/d') . "/" . uniqid(),
+                'kelurahan' => 3172040001,
+                'kecamatan' => 3172040,
+                'kota' => 3172,
+                'provinsi' => 31,
+                'status' => 'Process'
+            ]
+        );
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],

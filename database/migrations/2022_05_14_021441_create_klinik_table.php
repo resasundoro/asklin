@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('klinik', function (Blueprint $table) {
             $table->id();
+            $table->string('no_peserta')->nullable();
             $table->enum('asklin', ['0', '1'])->nullable();
             $table->string('no_anggota')->nullable();
             $table->string('nama_klinik')->nullable();
@@ -44,7 +45,7 @@ return new class extends Migration
             $table->string('kriteria')->nullable();
             $table->string('fasilitas')->nullable();
             $table->string('layanan')->nullable();
-            $table->enum('status', ['Waiting','Process','Approved','Create Dokter','Selesai Input','Data Tidak Sesuai','Ditolak Pusat','Kirim Konfirmasi Pembayaran'])->nullable();
+            $table->enum('status', ['Waiting','Process','Approved','Create Dokter','Selesai Input','Data Tidak Sesuai','Ditolak Pusat','Kirim Konfirmasi Pembayaran'])->default('Process');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

@@ -19,6 +19,16 @@
 
                 @include('layouts.backend.l-sidebar')
 
+                <div id="success">
+                    {{ session()->get('success') }}
+                </div>
+
+                <div id="error">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}<br>
+                    @endforeach
+                </div>
+
                 <!--app-content open-->
                 <div class="main-content app-content mt-0">
                     <div class="side-app">

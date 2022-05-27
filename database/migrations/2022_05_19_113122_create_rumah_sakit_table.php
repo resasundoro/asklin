@@ -18,8 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_klinik');
             $table->string('rs');
             $table->string('alamat');
-            $table->string('id_provinsi');
-            $table->string('id_kota');
             $table->string('tlf');
             $table->string('jarak');
             $table->unsignedBigInteger('created_by')->nullable();
@@ -27,9 +25,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('id_klinik')->references('id')->on('klinik');
-
-            $table->foreign('id_provinsi')->references('id')->on('provinces');
-            $table->foreign('id_kota')->references('id')->on('regencies');
         });
     }
 

@@ -6,8 +6,6 @@ use App\Models\Rumah_sakit;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\Klinik;
-use App\Models\Province;
-use App\Models\Regency;
 
 class Rumah_SakitController extends Controller
 { 
@@ -21,18 +19,14 @@ class Rumah_SakitController extends Controller
 
     public function index()
     {
-        $provinsi = Province::all();
-        $kota = Regency::all();
         $klinik = Klinik::all();
-        return view('rumah_sakit.index', compact('provinsi', 'kota', 'klinik'));
+        return view('rumah_sakit.index', compact('klinik'));
     }
 
     public function getRumah_Sakit(Request $request)
     {
         $data = Rumah_sakit::join('klinik as k', 'rumah_sakit.id_klinik', '=', 'k.id')
-                            ->join('provinces as p', 'rumah_sakit.id_provinsi', '=', 'p.id')
-                            ->join('regencies as r', 'rumah_sakit.id_kota', '=', 'r.id')
-                            ->select(['rumah_sakit.*', 'k.id as kid', 'k.nama_klinik', 'p.id as pid', 'p.name as nama_provinsi', 'r.id as rid', 'r.name as nama_kota'])
+                            ->select(['rumah_sakit.*', 'k.id as kid', 'k.nama_klinik'])
                             ->latest()->get();
         return Datatables::of($data)
             ->addIndexColumn()
@@ -43,7 +37,6 @@ class Rumah_SakitController extends Controller
 
     public function store(Request $request)
     {
-
         $ID = $request->id;
         $data = Rumah_sakit::updateOrCreate(
             ['id' => $ID],
@@ -51,8 +44,6 @@ class Rumah_SakitController extends Controller
                 'id_klinik' => $request->id_klinik,
                 'rs' => $request->rs,
                 'alamat' => $request->alamat,
-                'id_provinsi' => $request->id_provinsi,
-                'id_kota' => $request->id_kota,
                 'tlf' => $request->tlf,
                 'jarak' => $request->jarak
             ]

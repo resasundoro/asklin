@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Klinik;
 use App\Models\M_kriteria_klinik;
 use App\Models\M_fasilitas_klinik;
-use App\Models\M_layanan_klinik;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\Province;
@@ -27,9 +26,8 @@ class KlinikController extends Controller
     {
         $kriteria = M_kriteria_klinik::latest()->get();
         $fasilitas = M_fasilitas_klinik::latest()->get();
-        $layanan = M_layanan_klinik::latest()->get();
         $provinsi = Province::all();
-        return view('klinik.index', compact('kriteria', 'fasilitas', 'layanan','provinsi'));
+        return view('klinik.index', compact('kriteria', 'fasilitas', 'provinsi'));
     }
 
     public function getKlinik(Request $request)
@@ -56,10 +54,10 @@ class KlinikController extends Controller
 
         if ($logo_klinik = $request->file('logo_klinik')) {
             $destinationPath = 'images/klinik';
-            $profilKlinik = date('YmdHis') . "." . $logo_klinik->getClientOriginalExtension();
+            $profilKlinik = date('YmdHis') . "-" . uniqid() . "." . $logo_klinik->getClientOriginalExtension();
             $logo_klinik->move($destinationPath, $profilKlinik);
         }else{
-            unset($profilKlinik);
+            $profilKlinik = NULL;
         }
 
         $kriteria = implode(",", $request->kriteria);
@@ -68,6 +66,7 @@ class KlinikController extends Controller
         $data = Klinik::Create(
             [
                 'no_anggota' => $request->no_anggota,
+                'asklin' => $request->asklin,
                 'nama_klinik' => $request->nama_klinik,
                 'logo_klinik' => $profilKlinik,
                 'no_ijin_klinik' => $request->no_ijin_klinik,
@@ -95,6 +94,8 @@ class KlinikController extends Controller
                 'kriteria' => $kriteria,
                 'fasilitas' => $fasilitas,
                 'layanan' => $layanan,
+                'status' => $request->status,
+                'no_peserta' => date('Y/m/d') . "/" . uniqid()
             ]
         );
 
@@ -105,27 +106,25 @@ class KlinikController extends Controller
     {
         $kriteria = M_kriteria_klinik::latest()->get();
         $fasilitas = M_fasilitas_klinik::latest()->get();
-        $layanan = M_layanan_klinik::latest()->get();
         $provinsi = Province::all();
         $kota = Regency::where('province_id', $klinik->provinsi)->get();
         $kecamatan = District::where('regency_id', $klinik->kota)->get();
         $desa = Village::where('district_id', $klinik->kecamatan)->get();
-        return view('klinik.edit',compact('klinik', 'kriteria', 'fasilitas', 'layanan', 'provinsi', 'kota', 'kecamatan', 'desa'));
+        return view('klinik.edit',compact('klinik', 'kriteria', 'fasilitas', 'provinsi', 'kota', 'kecamatan', 'desa'));
     }
 
     public function update(Request $request, Klinik $klinik)
     {
         $request->validate([
             'nama_klinik' => 'required',
-            'logo_klinik' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
 
         if ($logo_klinik = $request->file('logo_klinik')) {
             $destinationPath = 'images/klinik';
-            $profilKlinik = date('YmdHis') . "." . $logo_klinik->getClientOriginalExtension();
+            $profilKlinik = date('YmdHis') . "-" . uniqid() . "." . $logo_klinik->getClientOriginalExtension();
             $logo_klinik->move($destinationPath, $profilKlinik);
         }else{
-            unset($profilKlinik);
+            $profilKlinik = $klinik->logo_klinik;
         }
 
         $kriteria = implode(",", $request->kriteria);
@@ -134,6 +133,7 @@ class KlinikController extends Controller
         $klinik->update(
             [
                 'id' => $request->id,
+                'asklin' => $request->asklin,
                 'no_anggota' => $request->no_anggota,
                 'nama_klinik' => $request->nama_klinik,
                 'logo_klinik' => $profilKlinik,
@@ -162,6 +162,8 @@ class KlinikController extends Controller
                 'kriteria' => $kriteria,
                 'fasilitas' => $fasilitas,
                 'layanan' => $layanan,
+                'status' => $request->status,
+                'no_peserta' => date('Y/m/d') . "/" . uniqid()
             ]
         );
 

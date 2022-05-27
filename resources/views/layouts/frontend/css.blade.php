@@ -13,6 +13,15 @@
 <link rel="stylesheet" href="{{ asset('frontend/css/theme-blog.css') }}">
 <link rel="stylesheet" href="{{ asset('frontend/css/theme-shop.css') }}">
 
+<!-- Admin Extension Specific Page Vendor CSS -->
+<link rel="stylesheet" href="{{ asset('frontend/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css') }}" />
+<link rel="stylesheet" href="{{ asset('frontend/vendor/jquery-ui/jquery-ui.css') }}" />
+<link rel="stylesheet" href="{{ asset('frontend/vendor/jquery-ui/jquery-ui.theme.css') }}" />
+<link rel="stylesheet" href="{{ asset('frontend/vendor/select2/css/select2.css') }}" />
+<link rel="stylesheet" href="{{ asset('frontend/vendor/select2-bootstrap-theme/select2-bootstrap.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('frontend/vendor/bootstrap-multiselect/css/bootstrap-multiselect.css') }}" />
+<link rel="stylesheet" href="{{ asset('frontend/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" />
+
 <!-- Skin CSS -->
 <link id="skinCSS" rel="stylesheet" href="{{ asset('frontend/css/skins/skin-corporate-9.css') }}">
 

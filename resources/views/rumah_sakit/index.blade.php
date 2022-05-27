@@ -72,28 +72,6 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-md-3 form-label">Provinsi</label>
-                        <div class="col-md-9">
-                            <select class="form-control form-select" name="id_provinsi" id="id_provinsi">
-                                <option>==Pilih Provinsi==</option>
-                                @foreach ($provinsi as $p)
-                                    <option value="{{ $p->id }}">{{ $p->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-md-3 form-label">Kota/Kabupaten</label>
-                        <div class="col-md-9">
-                            <select class="form-control form-select" name="id_kota" id="id_kota">
-                                <option>==Pilih Kota/Kabupaten==</option>
-                                @foreach ($kota as $k)
-                                    <option value="{{ $k->id }}">{{ $k->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
                         <label class="col-md-3 form-label nama">Telepon</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" id="tlf" name="tlf">
@@ -148,11 +126,7 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'nama_klinik', name: 'nama_klinik'},
                 {data: 'rs', name: 'rs'},
-                {data: "alamat",
-                    render: function ( data, type, row ) {
-                        return row.alamat + ',<br>' + row.nama_kota + ',<br>' + row.nama_provinsi;
-                    }
-                },
+                {data: "alamat", name: 'alamat'},
                 {data: 'tlf', name: 'tlf'},
                 {data: 'jarak', name: 'jarak'},
                 {
@@ -162,20 +136,6 @@
                     searchable: true
                 },
             ]
-        });
-
-        $('#id_provinsi').on('change', function(){
-            let id_provinsi = $('#id_provinsi').val();
-
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('getKota') }}',
-                data: {id_provinsi:id_provinsi},
-                cache: false,
-                success: function(data){
-                    $('#id_kota').html(data);
-                }
-            })
         });
     });
 
@@ -199,8 +159,6 @@
                 $('#id_klinik').val(data.id_klinik);
                 $('#rs').val(data.rs);
                 $('#alamat').val(data.alamat);
-                $('#id_provinsi').val(data.id_provinsi);
-                $('#id_kota').val(data.id_kota);
                 $('#tlf').val(data.tlf);
                 $('#jarak').val(data.jarak);
             }

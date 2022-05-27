@@ -29,6 +29,9 @@ return new class extends Migration
             $table->string('farmasi_apoteker')->nullable();
             $table->string('ijazah_terakhir')->nullable();
             $table->string('jabatan')->nullable();
+            $table->text('foto_sip')->nullable();
+            $table->text('foto_str')->nullable();
+            $table->text('foto_ijazah')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

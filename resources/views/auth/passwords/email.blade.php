@@ -1,36 +1,59 @@
-@extends('layouts.auth.main')
-
 @section('title')
     {{ __('Reset Password') }}
 @endsection
 
+@extends('layouts.frontend.main')
+
 @section('content')
-<div class="container-login100">
-    <div class="wrap-login100 p-6">
-        <form class="login100-form validate-form" method="POST" action="{{ route('password.email') }}">
-            @csrf
-            <span class="login100-form-title pb-5">{{ __('Reset Password') }}</span>
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
+<div role="main" class="main">
+    <section class="page-header page-header-modern bg-color-light-scale-1 page-header-lg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 align-self-center p-static order-2 text-center">
+                    <h1 class="font-weight-bold text-dark">{{ __('Reset Password') }}</h1>
                 </div>
-            @endif
-
-            <div class="wrap-input100 validate-input input-group">
-                <a href="javascript:void(0)" class="input-group-text bg-white text-muted"><i class="zmdi zmdi-email text-muted" aria-hidden="true"></i></a>
-                <input id="email" type="email" class="input100 border-start-0 form-control ms-0 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email" autofocus>
-                @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+                <div class="col-md-12 align-self-center order-1">
+                    <ul class="breadcrumb d-block text-center">
+                        <li><a href="{{ route('home') }}">Home</a></li>
+                        <li class="active">{{ __('Reset Password') }}</li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="container-login100-form-btn">
-                <button type="submit" class="login100-form-btn btn-primary">{{ __('Send Password Reset Link') }}</button>
+        </div>
+        <br>
+		<div class="row justify-content-md-center">
+            <div class="col-md-6">
+                <div class="featured-box featured-box-primary text-start mt-0">
+                    <div class="box-content">
+                        <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-0">{{ __('Reset Password') }}</h4>
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        <form action="{{ route('password.email') }}" id="frmLostPassword" method="POST" class="needs-validation">
+                            @csrf
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label class="form-label">{{ __('Email Address') }}</label>
+                                    <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email" autofocus>
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <input type="submit" value="{{ __('Send Password Reset Link') }}" class="btn btn-primary btn-modern float-end" data-loading-text="Loading...">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-        </form>
-    </div>
+        </div>
+	</section>
 </div>
 @endsection
