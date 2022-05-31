@@ -12,15 +12,25 @@
                 <div class="col-md-12 align-self-center p-static order-2 text-center">
                     <h1 class="font-weight-bold text-dark">User Akreditasi</h1>
                     <br/>
-                    <span class="badge badge-success badge-sm mb-3">{{ $k->status }}</span>
-                    <br/>
-                    @if($k->status == "Process")
-                        <a href="{{ url('pendaftaran/edit') }}" class="btn btn-outline btn-secondary mb-2">Update Klinik</a>
-                    @elseif($k->status == "Waiting")
-                        <a href="{{ url('pendaftaran/edit') }}" class="btn btn-outline btn-secondary mb-2">Update Persyaratan</a>
-                    @elseif($k->status == "Create Dokter")
+                    @if($k->status == "0")
+                        <span class="badge badge-success badge-sm mb-3">Pending</span><br/>
+                        <a href="{{ url('pendaftaran/edit') }}" class="btn btn-outline btn-secondary mb-2">Daftarkan Klinik</a>
+                    @elseif($k->status == "1")
+                       <span class="badge badge-success badge-sm mb-3">Waiting</span><br/>
+                       <a href="{{ url('pendaftaran/edit') }}" class="btn btn-outline btn-secondary mb-2">Update Persyaratan</a>
+                    @elseif($k->status == "2")
+                        <span class="badge badge-success badge-sm mb-3">Progress</span><br/>
                         <a href="{{ url('pendaftaran/sdm') }}" class="btn btn-outline btn-secondary mb-2">Update Persyaratan</a>
-                    @else
+                    @elseif($k->status == "3")
+                        <span class="badge badge-success badge-sm mb-3">Draft</span><br/>
+                        <a href="{{ url('pendaftaran/edit') }}" class="btn btn-outline btn-secondary mb-2">Update Klinik</a>
+                        <a href="{{ url('pendaftaran/sdm') }}" class="btn btn-outline btn-secondary mb-2">Update Persyaratan</a>
+                    @elseif($k->status == "4")
+                        <span class="badge badge-success badge-sm mb-3">Waiting Approval</span><br/>
+                    @elseif($k->status == "5")
+                        <span class="badge badge-success badge-sm mb-3">Approved</span><br/>
+                    @elseif($k->status == "6")
+                        <span class="badge badge-success badge-sm mb-3">Waiting Payment</span><br/>
                     @endif
                 </div>
                 <div class="col-md-12 align-self-center order-1">
@@ -325,6 +335,7 @@
                                                 <th>Nama Kontak</th>
                                                 <th>Alamat</th>
                                                 <th>No. Telepon</th>
+                                                <th>Dokumen</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -334,6 +345,9 @@
                                                     <td>{{ $i->kontak }}</td>
                                                     <td>{{ $i->alamat }}</td>
                                                     <td>{{ $i->tlf }}</td>
+                                                    <td>
+                                                        <a href="{{ asset('images/klinik/asuransi/' . $i->kerjasama) }}" target="_blank">Dokumen</a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -346,11 +360,21 @@
                                             @foreach ($ps as $i)
                                                 <div class="content-grid-item col-lg-3 text-center">
                                                     <div class="p-4">
-                                                        <p><a href="{{ asset('images/klinik/syarat/' . $i->dokumen) }}"target="_blank">{{ $i->dokumen }}</p>
+                                                        <p><a href="{{ asset('images/klinik/syarat/' . $i->dokumen) }}" target="_blank">Lihat</a></p>
                                                         <p>{{ $i->kategori }}</p>
+                                                        <p>
+                                                            @if($i->status == 0)
+                                                                PENDING
+                                                            @elseif($i->status == 1)
+                                                                GAGAL<br><i>{{ $i->keterangan }}</i>
+                                                            @else
+                                                                TERVERIFIKASI
+                                                            @endif
+                                                        </p>
                                                     </div>
                                                 </div>
                                             @endforeach
+                                        </div>
                                     </div>
                                 </div>
 

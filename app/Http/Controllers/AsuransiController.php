@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Asuransi;
 use Illuminate\Http\Request;
-use DataTables;
-use App\Models\Klinik;
 
 class AsuransiController extends Controller
 { 
@@ -15,24 +13,6 @@ class AsuransiController extends Controller
          $this->middleware('permission:asuransi-create', ['only' => ['create','store']]);
          $this->middleware('permission:asuransi-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:asuransi-delete', ['only' => ['destroy']]);
-    }
-
-    public function index()
-    {
-        $klinik = Klinik::all();
-        return view('asuransi.index', compact('klinik'));
-    }
-
-    public function getAsuransi(Request $request)
-    {
-        $data = Asuransi::join('klinik as k', 'asuransi.id_klinik', '=', 'k.id')
-                            ->select(['asuransi.*', 'k.id as kid', 'k.nama_klinik'])
-                            ->latest()->get();
-        return Datatables::of($data)
-            ->addIndexColumn()
-            ->addColumn('action', 'asuransi.action')
-            ->rawColumns(['action'])
-            ->toJson();
     }
 
     public function store(Request $request)

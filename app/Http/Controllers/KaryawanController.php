@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
     
 use App\Models\Karyawan;
-use App\Models\M_karyawan;
-use App\Models\Klinik;
 use Illuminate\Http\Request;
-use DataTables;
     
 class KaryawanController extends Controller
 { 
@@ -16,26 +13,6 @@ class KaryawanController extends Controller
          $this->middleware('permission:karyawan-create', ['only' => ['create','store']]);
          $this->middleware('permission:karyawan-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:karyawan-delete', ['only' => ['destroy']]);
-    }
-
-    public function index()
-    {
-        $klinik = Klinik::latest()->get();
-        $peranan = M_karyawan::latest()->get();
-        return view('karyawan.index', compact('klinik', 'peranan'));
-    }
-
-    public function getKaryawan(Request $request)
-    {
-        $data = Karyawan::join('m_karyawan as mk', 'karyawan.id_kategori', '=', 'mk.id')
-                        ->join('klinik as k', 'karyawan.id_klinik', '=', 'k.id')
-                        ->select(['karyawan.*', 'mk.id as mkid', 'mk.kategori', 'k.id as kid', 'k.nama_klinik'])
-                        ->latest()->get();
-        return Datatables::of($data)
-            ->addIndexColumn()
-            ->addColumn('action', 'karyawan.action')
-            ->rawColumns(['action'])
-            ->toJson();
     }
 
     public function store(Request $request)

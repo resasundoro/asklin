@@ -48,13 +48,7 @@ Route::get('m_ruang_klinik/list', [M_Ruang_KlinikController::class, 'getM_Ruang'
 Route::get('fasilitas_klinik/list', [M_Fasilitas_KlinikController::class, 'getFasilitas'])->name('fasilitas_klinik.list');
 Route::get('klinik/list', [KlinikController::class, 'getKlinik'])->name('klinik.list');
 Route::get('m_karyawan/list', [M_KaryawanController::class, 'getM_Karyawan'])->name('m_karyawan.list');
-Route::get('karyawan/list', [KaryawanController::class, 'getKaryawan'])->name('karyawan.list');
-Route::get('rumah_sakit/list', [Rumah_SakitController::class, 'getRumah_Sakit'])->name('rumah_sakit.list');
-Route::get('asuransi/list', [AsuransiController::class, 'getAsuransi'])->name('asuransi.list');
 Route::get('surveyor/list', [SurveyorController::class, 'getSurveyor'])->name('surveyor.list');
-Route::get('ruang_klinik/list', [Ruang_KlinikController::class, 'getRuang'])->name('ruang_klinik.list');
-Route::get('m_persyaratan/list', [M_PersyaratanController::class, 'getM_Persyaratan'])->name('m_persyaratan.list');
-Route::get('persyaratan/list', [PersyaratanController::class, 'getPersyaratan'])->name('persyaratan.list');
 
 // Wilayah
 Route::post('getKota', [WilayahController::class, 'getKota'])->name('getKota');
@@ -89,26 +83,23 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('fasilitas_klinik/delete', [M_Fasilitas_KlinikController::class, 'destroy'])->name('fasilitas_klinik.delete');
 
     Route::resource('klinik', KlinikController::class);
-    Route::post('klinik/store', [KlinikController::class, 'store'])->name('klinik.store');
+    Route::post('klinik/edit', [KlinikController::class, 'edit'])->name('klinik.edit');
+    Route::post('klinik/update', [KlinikController::class, 'update'])->name('klinik.update');
     Route::post('klinik/delete', [KlinikController::class, 'destroy'])->name('klinik.delete');
-    Route::post('klinik/show', [KlinikController::class, 'lihat'])->name('klinik.show');
 
     Route::resource('m_karyawan', M_KaryawanController::class);
     Route::post('m_karyawan/edit', [M_KaryawanController::class, 'edit'])->name('m_karyawan.edit');
     Route::post('m_karyawan/store', [M_KaryawanController::class, 'store'])->name('m_karyawan.store');
     Route::post('m_karyawan/delete', [M_KaryawanController::class, 'destroy'])->name('m_karyawan.delete');
 
-    Route::resource('karyawan', KaryawanController::class);
     Route::post('karyawan/edit', [KaryawanController::class, 'edit'])->name('karyawan.edit');
     Route::post('karyawan/store', [KaryawanController::class, 'store'])->name('karyawan.store');
     Route::post('karyawan/delete', [KaryawanController::class, 'destroy'])->name('karyawan.delete');
 
-    Route::resource('rumah_sakit', Rumah_SakitController::class);
     Route::post('rumah_sakit/edit', [Rumah_SakitController::class, 'edit'])->name('rumah_sakit.edit');
     Route::post('rumah_sakit/store', [Rumah_SakitController::class, 'store'])->name('rumah_sakit.store');
     Route::post('rumah_sakit/delete', [Rumah_SakitController::class, 'destroy'])->name('rumah_sakit.delete');
 
-    Route::resource('asuransi', AsuransiController::class);
     Route::post('asuransi/edit', [AsuransiController::class, 'edit'])->name('asuransi.edit');
     Route::post('asuransi/store', [AsuransiController::class, 'store'])->name('asuransi.store');
     Route::post('asuransi/delete', [AsuransiController::class, 'destroy'])->name('asuransi.delete');
@@ -125,19 +116,17 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('pendaftaran/draft', [PendaftaranController::class, 'draft'])->name('pendaftaran.draft');
     Route::put('pendaftaran/submit', [PendaftaranController::class, 'submit'])->name('pendaftaran.submit');
 
-    Route::resource('ruang_klinik', Ruang_KlinikController::class);
     Route::post('ruang_klinik/edit', [Ruang_KlinikController::class, 'edit'])->name('ruang_klinik.edit');
     Route::post('ruang_klinik/store', [Ruang_KlinikController::class, 'store'])->name('ruang_klinik.store');
     Route::post('ruang_klinik/delete', [Ruang_KlinikController::class, 'destroy'])->name('ruang_klinik.delete');
 
-    Route::resource('m_persyaratan', M_PersyaratanController::class);
     Route::post('m_persyaratan/edit', [M_PersyaratanController::class, 'edit'])->name('m_persyaratan.edit');
     Route::post('m_persyaratan/store', [M_PersyaratanController::class, 'store'])->name('m_persyaratan.store');
     Route::post('m_persyaratan/delete', [M_PersyaratanController::class, 'destroy'])->name('m_persyaratan.delete');
 
-    Route::resource('persyaratan', PersyaratanController::class);
     Route::post('persyaratan/edit', [PersyaratanController::class, 'edit'])->name('persyaratan.edit');
     Route::post('persyaratan/store', [PersyaratanController::class, 'store'])->name('persyaratan.store');
+    Route::post('persyaratan/update', [PersyaratanController::class, 'update'])->name('persyaratan.update');
     Route::post('persyaratan/delete', [PersyaratanController::class, 'destroy'])->name('persyaratan.delete');
 
     Route::get('status-akreditasi', [PageController::class, 'status_akreditasi'])->name('status_akreditasi');

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Rumah_sakit;
 use Illuminate\Http\Request;
-use DataTables;
-use App\Models\Klinik;
 
 class Rumah_SakitController extends Controller
 { 
@@ -15,24 +13,6 @@ class Rumah_SakitController extends Controller
          $this->middleware('permission:rumah-sakit-create', ['only' => ['create','store']]);
          $this->middleware('permission:rumah-sakit-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:rumah-sakit-delete', ['only' => ['destroy']]);
-    }
-
-    public function index()
-    {
-        $klinik = Klinik::all();
-        return view('rumah_sakit.index', compact('klinik'));
-    }
-
-    public function getRumah_Sakit(Request $request)
-    {
-        $data = Rumah_sakit::join('klinik as k', 'rumah_sakit.id_klinik', '=', 'k.id')
-                            ->select(['rumah_sakit.*', 'k.id as kid', 'k.nama_klinik'])
-                            ->latest()->get();
-        return Datatables::of($data)
-            ->addIndexColumn()
-            ->addColumn('action', 'rumah_sakit.action')
-            ->rawColumns(['action'])
-            ->toJson();
     }
 
     public function store(Request $request)

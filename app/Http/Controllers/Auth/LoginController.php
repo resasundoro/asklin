@@ -43,12 +43,14 @@ class LoginController extends Controller
     {   
         $input = $request->all();
 
+        $remember = $request->remember ? true : false;
+
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
+        if(auth()->attempt(['email' => $input['email'], 'password' => $input['password']], $remember))
         {
             if (auth()->user()->hasRole('Peserta') == 'Peserta') {
                 return redirect()->route('pendaftaran');

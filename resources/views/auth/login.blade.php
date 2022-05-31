@@ -59,7 +59,7 @@
                                 <div class="form-group col-lg-6">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                        <label class="custom-control-label text-2" for="rememberme">Remember Me</label>
+                                        <label class="custom-control-label text-2" for="remember">Remember Me</label>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">

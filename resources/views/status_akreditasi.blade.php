@@ -39,7 +39,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div id="DalamProses" class="tab-pane active">
-                                            @if($k->status == "Process" || $k->status == "Selesai Input")
+                                            @if($k->status == "1" || $k->status == "2")
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
@@ -61,7 +61,7 @@
                                             @endif
                                         </div>
                                         <div id="ButuhTindakan" class="tab-pane">
-                                            @if($k->status == "Data Tidak Sesuai")
+                                            @if($k->status == "3")
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>

@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ruang_klinik;
-use App\Models\M_ruang_klinik;
 use Illuminate\Http\Request;
-use DataTables;
-use App\Models\Klinik;
 
 class Ruang_KlinikController extends Controller
 {
@@ -16,26 +13,6 @@ class Ruang_KlinikController extends Controller
         $this->middleware('permission:ruang-klinik-create', ['only' => ['create','store']]);
         $this->middleware('permission:ruang-klinik-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:ruang-klinik-delete', ['only' => ['destroy']]);
-    }
-
-    public function index()
-    {
-        $m_ruang_klinik = M_ruang_klinik::all();
-        $klinik = Klinik::all();
-        return view('ruang_klinik.index', compact('klinik', 'm_ruang_klinik'));
-    }
-
-    public function getRuang(Request $request)
-    {
-        $data = Ruang_klinik::join('klinik as k', 'ruang_klinik.id_klinik', '=', 'k.id')
-                            ->join('m_ruang_klinik as mrk', 'ruang_klinik.id_ruang_klinik', '=', 'mrk.id')
-                            ->select(['ruang_klinik.*', 'k.id as kid', 'k.nama_klinik', 'mrk.id as mrkid', 'mrk.ruang as ruangklinik'])
-                            ->latest()->get();
-        return Datatables::of($data)
-            ->addIndexColumn()
-            ->addColumn('action', 'ruang_klinik.action')
-            ->rawColumns(['action'])
-            ->toJson();
     }
 
     public function store(Request $request)

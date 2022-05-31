@@ -399,6 +399,11 @@
 
 <script>
     $(function(e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $('#provinsi').on('change', function(){
             let id_provinsi = $('#provinsi').val();
 

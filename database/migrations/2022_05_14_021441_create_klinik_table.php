@@ -45,7 +45,7 @@ return new class extends Migration
             $table->string('kriteria')->nullable();
             $table->string('fasilitas')->nullable();
             $table->string('layanan')->nullable();
-            $table->enum('status', ['Waiting','Process','Approved','Create Dokter','Selesai Input','Data Tidak Sesuai','Ditolak Pusat','Kirim Konfirmasi Pembayaran'])->default('Process');
+            $table->enum('status', ['0', '1', '2', '3', '4', '5'])->default('0');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

@@ -426,6 +426,15 @@
                         <div class="col-sm text-center">
                             <p><a href="{{ asset('images/klinik/syarat/' . $i->dokumen) }}" target="_blank">{{ $i->dokumen }}</a></p>
                             <p>{{ $i->kategori }}</p>
+                            <p>
+                                @if($i->status == 0)
+                                    PENDING
+                                @elseif($i->status == 1)
+                                    GAGAL<br><i>{{ $i->keterangan }}</i>
+                                @else
+                                    TERVERIFIKASI
+                                @endif
+                            </p>
                             <div class="btn-group align-top">
                                 @can('persyaratan-delete')
                                     <button class="btn btn-sm btn-primary badge" type="button" onClick="deleteps({{ $i->id }})"><i class="fa fa-trash"></i> Hapus</button>

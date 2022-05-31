@@ -72,7 +72,7 @@ class RegisterController extends Controller
                 'kecamatan' => 3172040,
                 'kota' => 3172,
                 'provinsi' => 31,
-                'status' => 'Process'
+                'status' => '0'
             ]
         );
         $user = User::create([

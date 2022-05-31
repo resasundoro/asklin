@@ -173,6 +173,7 @@
                     </div>
                 </div>
                 <div class="modal-body" id="ps">
+                    <input type="hidden" name="status" id="status" value="0">
                     <div class="form-group row align-items-center">
                         <label class="col-sm-3 text-start text-sm-end mb-0">Kategori</label>
                         <div class="col-sm-9">

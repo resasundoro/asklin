@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Klinik;
 use App\Models\M_kriteria_klinik;
 use App\Models\M_fasilitas_klinik;
-use Illuminate\Http\Request;
-use DataTables;
+use App\Models\Karyawan;
+use App\Models\Rumah_sakit;
+use App\Models\Asuransi;
+use App\Models\Ruang_klinik;
+use App\Models\Persyaratan;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\District;
 use App\Models\Village;
+use App\Models\User;
+use Illuminate\Http\Request;
+use DataTables;
 
 class KlinikController extends Controller
 { 
@@ -45,133 +51,7 @@ class KlinikController extends Controller
             ->toJson();
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama_klinik' => 'required',
-            'logo_klinik' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-        ]);
-
-        if ($logo_klinik = $request->file('logo_klinik')) {
-            $destinationPath = 'images/klinik';
-            $profilKlinik = date('YmdHis') . "-" . uniqid() . "." . $logo_klinik->getClientOriginalExtension();
-            $logo_klinik->move($destinationPath, $profilKlinik);
-        }else{
-            $profilKlinik = NULL;
-        }
-
-        $kriteria = implode(",", $request->kriteria);
-        $fasilitas = implode(",", $request->fasilitas);
-        $layanan = implode(",", $request->layanan);
-        $data = Klinik::Create(
-            [
-                'no_anggota' => $request->no_anggota,
-                'asklin' => $request->asklin,
-                'nama_klinik' => $request->nama_klinik,
-                'logo_klinik' => $profilKlinik,
-                'no_ijin_klinik' => $request->no_ijin_klinik,
-                'tgl_terbit_ijin_klinik' => $request->tgl_terbit_ijin_klinik,
-                'masa_berlaku_ijin_klinik' => $request->masa_berlaku_ijin_klinik,
-                'nama_pendaftar' => $request->nama_pendaftar,
-                'email_pendaftar' => $request->email_pendaftar,
-                'tlf_pendaftar' => $request->tlf_pendaftar,
-                'status_pendaftar' => $request->status_pendaftar,
-                'nama_pemilik' => $request->nama_pemilik,
-                'jenis_klinik' => $request->jenis_klinik,
-                'status_kepemilikan_klinik' => $request->status_kepemilikan_klinik,
-                'tlf_klinik' => $request->tlf_klinik,
-                'alamat_klinik' => $request->alamat_klinik,
-                'rt' => $request->rt,
-                'rw' => $request->rw,
-                'kelurahan' => $request->kelurahan,
-                'kecamatan' => $request->kecamatan,
-                'kota' => $request->kota,
-                'provinsi' => $request->provinsi,
-                'kode_pos' => $request->kode_pos,
-                'bentuk_badan_usaha' => $request->bentuk_badan_usaha,
-                'bentuk_badan_hukum' => $request->bentuk_badan_hukum,
-                'nama_badan' => $request->nama_badan,
-                'kriteria' => $kriteria,
-                'fasilitas' => $fasilitas,
-                'layanan' => $layanan,
-                'status' => $request->status,
-                'no_peserta' => date('Y/m/d') . "/" . uniqid()
-            ]
-        );
-
-        return Response()->json($data);
-    }
-
-    public function edit(Klinik $klinik)
-    {
-        $kriteria = M_kriteria_klinik::latest()->get();
-        $fasilitas = M_fasilitas_klinik::latest()->get();
-        $provinsi = Province::all();
-        $kota = Regency::where('province_id', $klinik->provinsi)->get();
-        $kecamatan = District::where('regency_id', $klinik->kota)->get();
-        $desa = Village::where('district_id', $klinik->kecamatan)->get();
-        return view('klinik.edit',compact('klinik', 'kriteria', 'fasilitas', 'provinsi', 'kota', 'kecamatan', 'desa'));
-    }
-
-    public function update(Request $request, Klinik $klinik)
-    {
-        $request->validate([
-            'nama_klinik' => 'required',
-        ]);
-
-        if ($logo_klinik = $request->file('logo_klinik')) {
-            $destinationPath = 'images/klinik';
-            $profilKlinik = date('YmdHis') . "-" . uniqid() . "." . $logo_klinik->getClientOriginalExtension();
-            $logo_klinik->move($destinationPath, $profilKlinik);
-        }else{
-            $profilKlinik = $klinik->logo_klinik;
-        }
-
-        $kriteria = implode(",", $request->kriteria);
-        $fasilitas = implode(",", $request->fasilitas);
-        $layanan = implode(",", $request->layanan);
-        $klinik->update(
-            [
-                'id' => $request->id,
-                'asklin' => $request->asklin,
-                'no_anggota' => $request->no_anggota,
-                'nama_klinik' => $request->nama_klinik,
-                'logo_klinik' => $profilKlinik,
-                'no_ijin_klinik' => $request->no_ijin_klinik,
-                'tgl_terbit_ijin_klinik' => $request->tgl_terbit_ijin_klinik,
-                'masa_berlaku_ijin_klinik' => $request->masa_berlaku_ijin_klinik,
-                'nama_pendaftar' => $request->nama_pendaftar,
-                'email_pendaftar' => $request->email_pendaftar,
-                'tlf_pendaftar' => $request->tlf_pendaftar,
-                'status_pendaftar' => $request->status_pendaftar,
-                'nama_pemilik' => $request->nama_pemilik,
-                'jenis_klinik' => $request->jenis_klinik,
-                'status_kepemilikan_klinik' => $request->status_kepemilikan_klinik,
-                'tlf_klinik' => $request->tlf_klinik,
-                'alamat_klinik' => $request->alamat_klinik,
-                'rt' => $request->rt,
-                'rw' => $request->rw,
-                'kelurahan' => $request->kelurahan,
-                'kecamatan' => $request->kecamatan,
-                'kota' => $request->kota,
-                'provinsi' => $request->provinsi,
-                'kode_pos' => $request->kode_pos,
-                'bentuk_badan_usaha' => $request->bentuk_badan_usaha,
-                'bentuk_badan_hukum' => $request->bentuk_badan_hukum,
-                'nama_badan' => $request->nama_badan,
-                'kriteria' => $kriteria,
-                'fasilitas' => $fasilitas,
-                'layanan' => $layanan,
-                'status' => $request->status,
-                'no_peserta' => date('Y/m/d') . "/" . uniqid()
-            ]
-        );
-
-        return redirect()->route('klinik.index')
-                        ->with('success','Klinik berhasil diperbarui');
-    }
-
-    public function lihat(Request $request)
+    public function edit(Request $request)
     {
         $where = array('id' => $request->id);
         $data  = Klinik::where($where)->first();
@@ -179,11 +59,57 @@ class KlinikController extends Controller
         return Response()->json($data);
     }
 
+    public function show($id)
+    {
+        $k = Klinik::find($id);
+        $mkk = M_kriteria_klinik::all();
+        $mfk = M_fasilitas_klinik::all();
+        $kel = Village::find($k->kelurahan);
+        $kec = District::find($k->kecamatan);
+        $kab = Regency::find($k->kota);
+        $prov = Province::find($k->provinsi);
+        $pj = Karyawan::where([['id_klinik', $k->id], ['id_kategori', 1]])->get();
+        $dp = Karyawan::where([['id_klinik', $k->id], ['id_kategori', 2]])->get();
+        $tp = Karyawan::where([['id_klinik', $k->id], ['id_kategori', 3]])->get();
+        $tkl = Karyawan::where([['id_klinik', $k->id], ['id_kategori', 4]])->get();
+        $tsl = Karyawan::where([['id_klinik', $k->id], ['id_kategori', 5]])->get();
+        $rs = Rumah_sakit::where('id_klinik', $k->id)->get();
+        $asuransi = Asuransi::where('id_klinik', $k->id)->get();
+        $rk = Ruang_klinik::join('m_ruang_klinik as mrk', 'ruang_klinik.id_ruang_klinik', '=', 'mrk.id')->select('ruang_klinik.*', 'mrk.id as mrkid', 'mrk.ruang')->where('id_klinik', $k->id)->get();
+        $ps = Persyaratan::join('m_persyaratan as mps', 'persyaratan.id_persyaratan', '=', 'mps.id')->select('persyaratan.*', 'mps.id as mpsid', 'mps.kategori')->where('id_klinik', $k->id)->get();
+
+        return view('klinik.show',compact('k', 'mkk', 'mfk', 'kel', 'kec', 'kab', 'prov', 'pj', 'dp', 'tp', 'tkl', 'tsl', 'rs', 'asuransi', 'rk', 'ps',));
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'status' => 'required'
+        ]);
+
+        $ID = $request->id;
+        $data = Klinik::updateOrCreate(
+            ['id' => $ID],
+            [
+                'status' => $request->status1
+            ]
+        );
+
+        return Response()->json($data);
+    }
+
     public function destroy(Request $request)
     {
+        $file = Klinik::find($request->id);
+
+        if(file_exists(public_path() .  '/images/klinik/' . $file->logo_klinik)) {
+            unlink(public_path() .  '/images/klinik/' . $file->logo_klinik);
+        }
+
+        User::where('id_klinik', $file->id_klinik)->delete();
+
         $data = Klinik::where('id', $request->id)->delete();
 
         return Response()->json($data);
     }
-    
 }

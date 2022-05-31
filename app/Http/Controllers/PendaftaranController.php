@@ -37,8 +37,8 @@ class PendaftaranController extends Controller
         $tsl = Karyawan::where([['id_klinik', Auth::user()->id_klinik], ['id_kategori', 5]])->get();
         $rs = Rumah_sakit::where('id_klinik', Auth::user()->id_klinik)->get();
         $asuransi = Asuransi::where('id_klinik', Auth::user()->id_klinik)->get();
-        $rk = Ruang_klinik::join('m_ruang_klinik as mrk', 'ruang_klinik.id_ruang_klinik', '=', 'mrk.id')->select('ruang_klinik.foto', 'mrk.id as mrkid', 'mrk.ruang')->where('id_klinik', Auth::user()->id_klinik)->get();
-        $ps = Persyaratan::join('m_persyaratan as mps', 'persyaratan.id_persyaratan', '=', 'mps.id')->select('persyaratan.dokumen', 'mps.id as mpsid', 'mps.kategori')->where('id_klinik', Auth::user()->id_klinik)->get();
+        $rk = Ruang_klinik::join('m_ruang_klinik as mrk', 'ruang_klinik.id_ruang_klinik', '=', 'mrk.id')->select('ruang_klinik.*', 'mrk.id as mrkid', 'mrk.ruang')->where('id_klinik', Auth::user()->id_klinik)->get();
+        $ps = Persyaratan::join('m_persyaratan as mps', 'persyaratan.id_persyaratan', '=', 'mps.id')->select('persyaratan.*', 'mps.id as mpsid', 'mps.kategori')->where('id_klinik', Auth::user()->id_klinik)->get();
         return view('pendaftaran.index', compact('k', 'pj', 'dp', 'tp', 'tkl', 'tsl', 'rs', 'asuransi', 'rk', 'ps', 'mfk'));
     }
 
@@ -48,7 +48,7 @@ class PendaftaranController extends Controller
         $kriteria = M_kriteria_klinik::latest()->get();
         $fasilitas = M_fasilitas_klinik::latest()->get();
         $provinsi = Province::all();
-        $kota = Regency::all();
+        $kota = Regency::where('province_id', $p->provinsi)->get();
         $kecamatan = District::where('regency_id', $p->kota)->get();
         $kelurahan = Village::where('district_id', $p->kecamatan)->get();
         return view('pendaftaran.edit', compact('p', 'kriteria', 'fasilitas', 'provinsi', 'kota', 'kecamatan', 'kelurahan'));
@@ -107,7 +107,7 @@ class PendaftaranController extends Controller
                 'kriteria' => $kriteria,
                 'fasilitas' => $fasilitas,
                 'layanan' => $layanan,
-                'status' => "Waiting"
+                'status' => "1"
             ]
         );
 
@@ -132,13 +132,13 @@ class PendaftaranController extends Controller
 
     public function draft(Request $request)
     {
-        $data = Klinik::find(Auth::user()->id_klinik)->update(['status' => "Create Dokter"]);
-        return redirect()->route('pendaftaran')->with('success','Status Pendaftaran Anda "Create Dokter"');
+        $data = Klinik::find(Auth::user()->id_klinik)->update(['status' => "3"]);
+        return redirect()->route('pendaftaran')->with('success','Status Pendaftaran Anda "DRAFT"');
     }
 
     public function submit(Request $request)
     {
-        $data = Klinik::find(Auth::user()->id_klinik)->update(['status' => "Selesai Input"]);
-        return redirect()->route('pendaftaran')->with('success','Status Pendaftaran Anda "Create Dokter"');
+        $data = Klinik::find(Auth::user()->id_klinik)->update(['status' => "4"]);
+        return redirect()->route('pendaftaran')->with('success','Status Pendaftaran Anda "Waiting Approval"');
     }
 }
