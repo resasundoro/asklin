@@ -18,7 +18,7 @@ class M_Kriteria_KlinikController extends Controller
 
     public function index()
     {
-        return view('kriteria_klinik.index');
+        return view('backend.kriteria_klinik.index');
     }
 
     public function getKriteria(Request $request)
@@ -35,7 +35,7 @@ class M_Kriteria_KlinikController extends Controller
                 return $data->updated_at->format('d/m-y H:i:s');
             })
             ->addIndexColumn()
-            ->addColumn('action', 'kriteria_klinik.action')
+            ->addColumn('action', 'backend.kriteria_klinik.action')
             ->rawColumns(['action'])
             ->toJson();
     }

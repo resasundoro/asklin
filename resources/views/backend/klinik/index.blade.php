@@ -21,7 +21,6 @@
                                 <th class="border-bottom-0">No Peserta</th>
                                 <th class="border-bottom-0">Klinik</th>
                                 <th class="border-bottom-0">Pemilik</th>
-                                <th class="border-bottom-0">Jenis</th>
                                 <th class="border-bottom-0">Telfon</th>
                                 <th class="border-bottom-0">Kota</th>
                                 <th class="border-bottom-0">Tanggal</th>
@@ -69,9 +68,12 @@
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'no_peserta', name: 'no_peserta'},
-                {data: 'nama_klinik', name: 'nama_klinik'},
+                {data: 'nama_klinik',
+                    render: function ( data, type, row ) {
+                        return row.nama_klinik + '<br>(' + row.jenis_klinik + ')';
+                    }
+                },
                 {data: 'nama_pemilik', name: 'nama_pemilik'},
-                {data: 'jenis_klinik', name: 'jenis_klinik'},
                 {data: 'tlf_klinik', name: 'tlf_klinik'},
                 {data: "name", name: 'name'},
                 {data: 'created_at', name: 'created_at'},
@@ -83,9 +85,9 @@
                 },
             ],
             columnDefs: [
-                { orderable: false, targets: [0,7,8] }
+                { orderable: false, targets: [0,6,7] }
             ],
-            order: [[7, 'desc']],
+            order: [[6, 'desc']],
             buttons:
             [
                 'copyHtml5',

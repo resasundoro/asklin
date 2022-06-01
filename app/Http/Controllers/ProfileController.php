@@ -13,7 +13,7 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         $user = User::find(Auth::user()->id);
-        return view('profile.edit', compact('user'));
+        return view('backend.profile.edit', compact('user'));
     }
 
     public function password(Request $request)

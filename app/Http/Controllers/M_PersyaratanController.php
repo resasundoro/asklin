@@ -18,7 +18,7 @@ class M_PersyaratanController extends Controller
 
     public function index()
     {
-        return view('m_persyaratan.index');
+        return view('backend.m_persyaratan.index');
     }
 
     public function getM_Persyaratan(Request $request)
@@ -35,7 +35,7 @@ class M_PersyaratanController extends Controller
                 return $data->updated_at->format('d/m-y H:i:s');
             })
             ->addIndexColumn()
-            ->addColumn('action', 'm_persyaratan.action')
+            ->addColumn('action', 'backend.m_persyaratan.action')
             ->rawColumns(['action'])
             ->toJson();
     }

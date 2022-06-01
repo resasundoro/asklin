@@ -24,7 +24,7 @@ class UserController extends Controller
     public function index()
     {
         $roles = Role::pluck('name','name')->all();
-        return view('users.index', compact('roles'));
+        return view('backend.users.index', compact('roles'));
     }
 
     public function getUsers(Request $request)
@@ -32,7 +32,7 @@ class UserController extends Controller
         $data = User::with('roles')->latest()->get();
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('action', 'users.action')
+            ->addColumn('action', 'backend.users.action')
             ->rawColumns(['action'])
             ->toJson();
     }

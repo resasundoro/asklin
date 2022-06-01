@@ -18,7 +18,7 @@ class M_Fasilitas_KlinikController extends Controller
 
     public function index()
     {
-        return view('fasilitas_klinik.index');
+        return view('backend.fasilitas_klinik.index');
     }
 
     public function getFasilitas(Request $request)
@@ -35,7 +35,7 @@ class M_Fasilitas_KlinikController extends Controller
                 return $data->updated_at->format('d/m-y H:i:s');
             })
             ->addIndexColumn()
-            ->addColumn('action', 'fasilitas_klinik.action')
+            ->addColumn('action', 'backend.fasilitas_klinik.action')
             ->rawColumns(['action'])
             ->toJson();
     }

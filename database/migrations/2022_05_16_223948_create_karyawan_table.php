@@ -36,7 +36,7 @@ return new class extends Migration
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_klinik')->references('id')->on('klinik');
+            $table->foreign('id_klinik')->references('id')->on('klinik')->onDelete('cascade');
 
             $table->foreign('id_kategori')->references('id')->on('m_karyawan');
         });

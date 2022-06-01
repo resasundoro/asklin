@@ -18,7 +18,7 @@ class M_KaryawanController extends Controller
 
     public function index()
     {
-        return view('m_karyawan.index');
+        return view('backend.m_karyawan.index');
     }
 
     public function getM_Karyawan(Request $request)
@@ -35,7 +35,7 @@ class M_KaryawanController extends Controller
                 return $data->updated_at->format('d/m-y H:i:s');
             })
             ->addIndexColumn()
-            ->addColumn('action', 'm_karyawan.action')
+            ->addColumn('action', 'backend.m_karyawan.action')
             ->rawColumns(['action'])
             ->toJson();
     }

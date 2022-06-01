@@ -28,7 +28,7 @@ class SurveyorController extends Controller
         $kecamatan = District::all();
         $kelurahan = Village::all();
         $user = User::role('Surveyor')->get();
-        return view('surveyor.index', compact('provinsi', 'kota', 'kecamatan', 'kelurahan', 'user'));
+        return view('backend.surveyor.index', compact('provinsi', 'kota', 'kecamatan', 'kelurahan', 'user'));
     }
 
     public function getSurveyor(Request $request)
@@ -45,7 +45,7 @@ class SurveyorController extends Controller
                             ->latest()->get();
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('action', 'surveyor.action')
+            ->addColumn('action', 'backend.surveyor.action')
             ->rawColumns(['action'])
             ->toJson();
     }

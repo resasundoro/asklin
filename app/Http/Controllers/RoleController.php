@@ -23,7 +23,7 @@ class RoleController extends Controller
     public function index()
     {
         $permission = Permission::get();
-        return view('roles.index', compact('permission'));
+        return view('backend.roles.index', compact('permission'));
     }
 
     public function getRoles(Request $request)
@@ -31,7 +31,7 @@ class RoleController extends Controller
         $data = Role::latest()->get();
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('action', 'roles.action')
+            ->addColumn('action', 'backend.roles.action')
             ->rawColumns(['action'])
             ->toJson();
     }
@@ -57,7 +57,7 @@ class RoleController extends Controller
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
     
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+        return view('backend.roles.edit',compact('role','permission','rolePermissions'));
     }
 
     public function update(Request $request, $id)

@@ -18,7 +18,7 @@ class M_Ruang_KlinikController extends Controller
 
     public function index()
     {
-        return view('m_ruang_klinik.index');
+        return view('backend.m_ruang_klinik.index');
     }
 
     public function getM_Ruang(Request $request)
@@ -35,7 +35,7 @@ class M_Ruang_KlinikController extends Controller
                 return $data->updated_at->format('d/m-y H:i:s');
             })
             ->addIndexColumn()
-            ->addColumn('action', 'm_ruang_klinik.action')
+            ->addColumn('action', 'backend.m_ruang_klinik.action')
             ->rawColumns(['action'])
             ->toJson();
     }

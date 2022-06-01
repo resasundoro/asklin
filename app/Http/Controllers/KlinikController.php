@@ -33,20 +33,21 @@ class KlinikController extends Controller
         $kriteria = M_kriteria_klinik::latest()->get();
         $fasilitas = M_fasilitas_klinik::latest()->get();
         $provinsi = Province::all();
-        return view('klinik.index', compact('kriteria', 'fasilitas', 'provinsi'));
+        return view('backend.klinik.index', compact('kriteria', 'fasilitas', 'provinsi'));
     }
 
     public function getKlinik(Request $request)
     {
         $data = Klinik::join('regencies', 'klinik.kota', '=', 'regencies.id')
                         ->select('klinik.*', 'regencies.id as rid', 'regencies.name')
+                        ->where('status', '!=', '0')
                         ->latest()->get();
         return Datatables::of($data)
             ->editColumn('created_at', function ($data) {
                 return $data->created_at->format('d-m-y H:i:s');
             })
             ->addIndexColumn()
-            ->addColumn('action', 'klinik.action')
+            ->addColumn('action', 'backend.klinik.action')
             ->rawColumns(['action'])
             ->toJson();
     }
@@ -78,7 +79,7 @@ class KlinikController extends Controller
         $rk = Ruang_klinik::join('m_ruang_klinik as mrk', 'ruang_klinik.id_ruang_klinik', '=', 'mrk.id')->select('ruang_klinik.*', 'mrk.id as mrkid', 'mrk.ruang')->where('id_klinik', $k->id)->get();
         $ps = Persyaratan::join('m_persyaratan as mps', 'persyaratan.id_persyaratan', '=', 'mps.id')->select('persyaratan.*', 'mps.id as mpsid', 'mps.kategori')->where('id_klinik', $k->id)->get();
 
-        return view('klinik.show',compact('k', 'mkk', 'mfk', 'kel', 'kec', 'kab', 'prov', 'pj', 'dp', 'tp', 'tkl', 'tsl', 'rs', 'asuransi', 'rk', 'ps',));
+        return view('backend.klinik.show',compact('k', 'mkk', 'mfk', 'kel', 'kec', 'kab', 'prov', 'pj', 'dp', 'tp', 'tkl', 'tsl', 'rs', 'asuransi', 'rk', 'ps',));
     }
 
     public function update(Request $request)
@@ -102,11 +103,11 @@ class KlinikController extends Controller
     {
         $file = Klinik::find($request->id);
 
-        if(file_exists(public_path() .  '/images/klinik/' . $file->logo_klinik)) {
-            unlink(public_path() .  '/images/klinik/' . $file->logo_klinik);
+        if($file->logo_klinik !== NULL) {
+            if(file_exists(public_path() .  '/images/klinik/' . $file->logo_klinik)) {
+                unlink(public_path() .  '/images/klinik/' . $file->logo_klinik);
+            }
         }
-
-        User::where('id_klinik', $file->id_klinik)->delete();
 
         $data = Klinik::where('id', $request->id)->delete();
 

@@ -86,10 +86,13 @@ class KaryawanController extends Controller
     {
         $file = Karyawan::find($request->id);
 
-        if($file->foto_str || $file->foto_sip){
+        if($file->foto_str !== NULL){
             unlink(public_path() .  '/images/klinik/sdm/' . $file->foto_str);
+        }
+        if($file->foto_sip !== NULL ){
             unlink(public_path() .  '/images/klinik/sdm/' . $file->foto_sip);
-        } elseif($file->foto_ijazah){
+        }
+        if($file->foto_ijazah !== NULL ){
             unlink(public_path() .  '/images/klinik/sdm/' . $file->foto_ijazah);
         }
 
