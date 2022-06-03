@@ -55,8 +55,6 @@
                     </div>
                 </div>
 
-                @include('layouts.backend.r-sidebar')
-
             </div>
 
         </div>

@@ -18,6 +18,11 @@
                 <div class="navbar navbar-collapse responsive-navbar p-0">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                         <div class="d-flex order-lg-2">
+                            <div class="dropdown d-flex">
+                                <livewire:offline/>
+                            </div>
+                            <!-- CONNECTION -->
+                            
                             <div class="dropdown  d-flex">
                                 <a class="nav-link icon theme-layout nav-link-bg layout-setting">
                                         <span class="dark-layout"><i class="fe fe-moon"></i></span>
@@ -32,13 +37,6 @@
                                 </a>
                             </div>
                             <!-- FULL-SCREEN -->
-
-                            <div class="dropdown d-flex header-settings">
-                                <a href="javascript:void(0);" class="nav-link icon" data-bs-toggle="sidebar-right" data-target=".sidebar-right">
-                                    <i class="fe fe-align-right"></i>
-                                </a>
-                            </div>
-                            <!-- SIDE-MENU -->
 
                             <div class="dropdown d-flex profile-1">
                                 <a href="javascript:void(0)" data-bs-toggle="dropdown" class="nav-link leading-none d-flex">
