@@ -55,6 +55,23 @@
                     </ul>
                 </li>
 
+                <li class="slide {{Request::is(['artikel', 'kategori_artikel', 'tags_artikel']) ? 'is-expanded' : ''}}">
+                    <a class="side-menu__item {{Request::is(['artikel', 'kategori_artikel', 'tags_artikel']) ? 'active is-expanded' : ''}}" data-bs-toggle="slide" href="javascript:void(0)">
+                        <i class="side-menu__icon fe fe-book"></i><span class="side-menu__label">Blog</span><i class="angle fe fe-chevron-right"></i>
+                    </a>
+                    <ul class="slide-menu {{Request::is(['artikel', 'kategori_artikel', 'tags_artikel']) ? 'open' : ''}}">
+                        @can('artikel-list')
+                            <li><a href="{{ url('artikel') }}" class="slide-item {{Request::is('artikel') ? 'active' : ''}}">Artikel</a></li>
+                        @endcan
+                        @can('kategori-artikel-list')
+                            <li><a href="{{ url('kategori_artikel') }}" class="slide-item {{Request::is('kategori_artikel') ? 'active' : ''}}">Kategori</a></li>
+                        @endcan
+                        @can('tags-artikel-list')
+                            <li><a href="{{ url('tags_artikel') }}" class="slide-item {{Request::is('tags_artikel') ? 'active' : ''}}">Tags</a></li>
+                        @endcan
+                    </ul>
+                </li>
+
                 @can(['user-list', 'role-list'])
                     <li class="sub-category">
                         <h3>Konfigurasi</h3>

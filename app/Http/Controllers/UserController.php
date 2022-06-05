@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::all();
         return view('backend.users.index', compact('roles'));
     }
 
@@ -55,15 +55,15 @@ class UserController extends Controller
 
     public function edit(Request $request)
     {
-        $where = array('id' => $request->id);
-        $user  = User::with('roles')->where($where)->first();
+        $data = User::find($request->id);
+        $role = $data->roles()->first()->id;
 
-        return Response()->json($user);
+        return Response()->json([$data, $role]);
     }
 
     public function destroy(Request $request)
     {
-        $user = User::where('id',$request->id)->delete();
+        $user = User::find($request->id)->delete();
         return Response()->json($user);
     }
 }

@@ -23,6 +23,9 @@ use App\Http\Controllers\Ruang_KlinikController;
 use App\Http\Controllers\M_PersyaratanController;
 use App\Http\Controllers\PersyaratanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Kategori_ArtikelController;
+use App\Http\Controllers\Tags_ArtikelController;
+use App\Http\Controllers\ArtikelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +40,7 @@ use App\Http\Controllers\ProfileController;
   
 // Page
 Route::get('/', [PageController::class, 'index'])->name('home');
-  
+
 Auth::routes();
 
 // Datatable
@@ -49,6 +52,9 @@ Route::get('fasilitas_klinik/list', [M_Fasilitas_KlinikController::class, 'getFa
 Route::get('klinik/list', [KlinikController::class, 'getKlinik'])->name('klinik.list');
 Route::get('m_karyawan/list', [M_KaryawanController::class, 'getM_Karyawan'])->name('m_karyawan.list');
 Route::get('surveyor/list', [SurveyorController::class, 'getSurveyor'])->name('surveyor.list');
+Route::get('kategori_artikel/list', [Kategori_ArtikelController::class, 'getKategori_Artikel'])->name('kategori_artikel.list');
+Route::get('tags_artikel/list', [Tags_ArtikelController::class, 'getTags_Artikel'])->name('tags_artikel.list');
+Route::get('artikel/list', [ArtikelController::class, 'getArtikel'])->name('artikel.list');
 
 // Wilayah
 Route::post('getKota', [WilayahController::class, 'getKota'])->name('getKota');
@@ -137,4 +143,19 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('profile/update/password', [ProfileController::class, 'password'])->name('profile.update.password');
     Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('profile/update/account', [ProfileController::class, 'update_account'])->name('profile.update.account');
+
+    Route::resource('kategori_artikel', Kategori_ArtikelController::class);
+    Route::post('kategori_artikel/edit', [Kategori_ArtikelController::class, 'edit'])->name('kategori_artikel.edit');
+    Route::post('kategori_artikel/store', [Kategori_ArtikelController::class, 'store'])->name('kategori_artikel.store');
+    Route::post('kategori_artikel/delete', [Kategori_ArtikelController::class, 'destroy'])->name('kategori_artikel.delete');
+
+    Route::resource('tags_artikel', Tags_ArtikelController::class);
+    Route::post('tags_artikel/edit', [Tags_ArtikelController::class, 'edit'])->name('tags_artikel.edit');
+    Route::post('tags_artikel/store', [Tags_ArtikelController::class, 'store'])->name('tags_artikel.store');
+    Route::post('tags_artikel/delete', [Tags_ArtikelController::class, 'destroy'])->name('tags_artikel.delete');
+
+    Route::resource('artikel', ArtikelController::class);
+    Route::post('artikel/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
+    Route::post('artikel/store', [ArtikelController::class, 'store'])->name('artikel.store');
+    Route::post('artikel/delete', [ArtikelController::class, 'destroy'])->name('artikel.delete');
 });

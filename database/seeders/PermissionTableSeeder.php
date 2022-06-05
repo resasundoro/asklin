@@ -73,6 +73,18 @@ class PermissionTableSeeder extends Seeder
             'ruang-klinik-create',
             'ruang-klinik-edit',
             'ruang-klinik-delete',
+            'kategori-artikel-list',
+            'kategori-artikel-create',
+            'kategori-artikel-edit',
+            'kategori-artikel-delete',
+            'tags-artikel-list',
+            'tags-artikel-create',
+            'tags-artikel-edit',
+            'tags-artikel-delete',
+            'artikel-list',
+            'artikel-create',
+            'artikel-edit',
+            'artikel-delete',
             
         ];
       

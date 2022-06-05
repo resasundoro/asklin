@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DataTables;
-use App\Models\Province;
-use App\Models\Regency;
-use App\Models\District;
-use App\Models\Village;
+use App\Models\{Province, Regency, District, Village};
     
 class WilayahController extends Controller
 {

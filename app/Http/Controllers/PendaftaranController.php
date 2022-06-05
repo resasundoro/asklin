@@ -2,20 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Klinik;
-use App\Models\M_kriteria_klinik;
-use App\Models\M_fasilitas_klinik;
-use App\Models\Karyawan;
-use App\Models\Rumah_sakit;
-use App\Models\Asuransi;
-use App\Models\Province;
-use App\Models\Regency;
-use App\Models\District;
-use App\Models\Village;
-use App\Models\M_ruang_klinik;
-use App\Models\Ruang_klinik;
-use App\Models\M_persyaratan;
-use App\Models\Persyaratan;
+use App\Models\{Klinik, M_kriteria_klinik, M_fasilitas_klinik, Karyawan, Rumah_sakit, Asuransi, Province, Regency, District, Village, M_ruang_klinik, Ruang_klinik, M_persyaratan, Persyaratan};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

@@ -1,7 +1,7 @@
 @extends('layouts.backend.main')
 
 @section('breadcrumb')
-    Manajemen Pengguna
+    Artikel
 @endsection
 
 @section('content')
@@ -10,9 +10,9 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">List Data Pengguna</h3>
-                @can('user-create')
-                    <a class="modal-effect btn btn-primary ms-auto" onClick="add()" href="javascript:void(0)">Tambah Pengguna</a>
+                <h3 class="card-title">List Data Artikel</h3>
+                @can('artikel-create')
+                    <a class="modal-effect btn btn-primary ms-auto" onClick="add()" href="javascript:void(0)">Tambah Artikel</a>
                 @endcan
             </div>
             <div class="card-body">
@@ -21,9 +21,11 @@
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">No</th>
-                                <th class="border-bottom-0">Name</th>
-                                <th class="border-bottom-0">Email</th>
-                                <th class="border-bottom-0">Role</th>
+                                <th class="border-bottom-0">Cover</th>
+                                <th class="border-bottom-0">Title</th>
+                                <th class="border-bottom-0">Kategori</th>
+                                <th class="border-bottom-0">Dibuat</th>
+                                <th class="border-bottom-0">Diperbarui</th>
                                 <th class="border-bottom-0">Action</th>
                             </tr>
                         </thead>
@@ -37,7 +39,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
@@ -46,30 +48,50 @@
             <form action="javascript:void(0)" id="form" name="form" class="form-horizontal" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" id="id">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label class="form-label">Nama lengkap</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label">Thumbnail</label>
+                            <input type="file" class="form-control" id="cover" name="cover">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <img src="" id="setcover" style="max-width: 300px">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="form-label">Kategori</label>
+                            <select name="id_kategori" id="id_kategori" class="form-control">
+                                <option value="" disabled selected>Pilih Kategori</option>
+                                @foreach ($kategori as $k)
+                                    <option value="{{ $k->id }}">{{ $k->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="form-label">Tags</label>
+                            <select name="id_tags[]" id="id_tags" class="form-control" multiple>
+                                <option value="" disabled selected>Pilih Tags</option>
+                                @foreach ($tags as $t)
+                                    <option value="{{ $t->id }}">{{ $t->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email">
+                        <label class="form-label">Konten</label>
+                        <textarea class="form-control" id="desc" name="desc" cols="30" rows="10"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Roles</label>
-                        <select class="form-control" id="roles" name="roles">
-                            <option>==Pilih Role==</option>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
+                        <label class="form-label">Keywords</label>
+                        <input type="text" class="form-control" id="keywords" name="keywords">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Konfirmasi Password</label>
-                        <input type="password" class="form-control" id="confirm-password" name="confirm-password">
+                        <label class="form-label">Meta Description</label>
+                        <input type="text" class="form-control" id="meta_desc" name="meta_desc">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -97,6 +119,9 @@
 <script src="{{ asset('assets/plugins/datatable/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatable/responsive.bootstrap5.min.js') }}"></script>
 
+<!-- CKEDITOR -->
+<script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+
 <script>
     $(function(e) {
         $.ajaxSetup({
@@ -108,16 +133,28 @@
         $('#datatable').DataTable({
             processing: true,
             serverSide: true,
+            responsive: true,
             type: 'JSON',
-            ajax: '{{ route('users.list') }}',
+            ajax: '{{ route('artikel.list') }}',
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data : 'roles', name : 'roles', render: function(data) {
-                    let names = data.map(x => x.name);
-                    return names.join("<br/>");
-                }},
+                {data: "cover",
+                    render: function ( data, type, row ) {
+                        return "<img src='{{ asset('images/blog') }}" + "/" + row.cover + "' height='50'>";
+                    }
+                },
+                {data: 'title', name: 'title'},
+                {data: 'nm_kategori', name: 'nm_kategori'},
+                {data: "created_by",
+                    render: function ( data, type, row ) {
+                        return row.nama1 + '<br>(' + row.created_at + ')';
+                    }
+                },
+                {data: "updated_by",
+                    render: function ( data, type, row ) {
+                        return row.nama2 + '<br>(' + row.updated_at + ')';
+                    }
+                },
                 {
                     data: 'action', 
                     name: 'action', 
@@ -128,26 +165,37 @@
         });
     });
 
+    CKEDITOR.replace( 'desc' );
+
     function add(){
         $('#form').trigger("reset");
-        $('.modal-title').html("Tambah Pengguna");
+        $('#setcover').hide();
+        $('.modal-title').html("Tambah Artikel");
         $('#modal').modal('show');
         $('#id').val('');
+        CKEDITOR.instances['desc'].setData();
     }
 
     function edit(id){
         $.ajax({
             type:"POST",
-            url: '{{ route('users.edit') }}',
+            url: '{{ route('artikel.edit') }}',
             data: { id: id },
             dataType: 'json',
             success: function(data){
-                $('.modal-title').html("Edit Pengguna");
+                $('#setcover').show();
+                $('.modal-title').html("Edit Artikel");
                 $('#modal').modal('show');
-                $('#id').val(data[0]['id']);
-                $('#name').val(data[0]['name']);
-                $('#roles').val(data[1]);
-                $('#email').val(data[0]['email']);
+                $('#id').val(data.id);
+                $('#id_kategori').val(data.id_kategori);
+                $('#id_tags').val(data.id_tags);
+                $('#setcover').attr({src: "{{ asset('images/blog') }}" +"/" +data.cover});
+                $('#title').val(data.title);
+                $('#slug').val(data.slug);
+                $('#desc').val(data.desc);
+                $('#keywords').val(data.keywords);
+                $('#meta_desc').val(data.meta_desc);
+                CKEDITOR.instances['desc'].setData(desc);
             }
         });
     }
@@ -158,7 +206,7 @@
         var formData = new FormData(this);
         $.ajax({
             type:'POST',
-            url: '{{ route('users.store') }}',
+            url: '{{ route('artikel.store') }}',
             data: formData,
             cache:false,
             contentType: false,
@@ -166,7 +214,7 @@
             success: (data) => {
                 $("#modal").modal('hide');
                 $.growl.notice({
-                    message: "Berhasil menambahkan pengguna."
+                    message: "Berhasil menambahkan artikel."
                 });
                 $('#datatable').dataTable().fnDraw(false);
                 $("#btn-save").html('Submit');
@@ -182,17 +230,17 @@
     });
 
     function deleteu(id){
-        if (confirm("Hapus pengguna ini?") == true) {
+        if (confirm("Hapus artikel ini?") == true) {
             var id = id;
             $.ajax({
                 type:"POST",
-                url: "{{ url('users/delete') }}",
+                url: "{{ url('artikel/delete') }}",
                 data: { id: id },
                 dataType: 'json',
                 success: function(res){
                     $('#datatable').dataTable().fnDraw(false);
                     $.growl.notice({
-                        message: "Pengguna berhasil dihapus."
+                        message: "Artikel berhasil dihapus."
                     });
                 }
             });

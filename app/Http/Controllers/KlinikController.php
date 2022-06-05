@@ -2,19 +2,7 @@
     
 namespace App\Http\Controllers;
     
-use App\Models\Klinik;
-use App\Models\M_kriteria_klinik;
-use App\Models\M_fasilitas_klinik;
-use App\Models\Karyawan;
-use App\Models\Rumah_sakit;
-use App\Models\Asuransi;
-use App\Models\Ruang_klinik;
-use App\Models\Persyaratan;
-use App\Models\Province;
-use App\Models\Regency;
-use App\Models\District;
-use App\Models\Village;
-use App\Models\User;
+use App\Models\{Klinik, M_kriteria_klinik, M_fasilitas_klinik, Karyawan, Rumah_sakit, Asuransi, Ruang_klinik, Persyaratan, Province, Regency, District, Village, User};
 use Illuminate\Http\Request;
 use DataTables;
 

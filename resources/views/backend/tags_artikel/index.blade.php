@@ -1,7 +1,7 @@
 @extends('layouts.backend.main')
 
 @section('breadcrumb')
-    Manajemen Pengguna
+    Tags Artikel
 @endsection
 
 @section('content')
@@ -10,9 +10,9 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">List Data Pengguna</h3>
-                @can('user-create')
-                    <a class="modal-effect btn btn-primary ms-auto" onClick="add()" href="javascript:void(0)">Tambah Pengguna</a>
+                <h3 class="card-title">List Data Tags Artikel</h3>
+                @can('tags-artikel-create')
+                    <a class="modal-effect btn btn-primary ms-auto" onClick="add()" href="javascript:void(0)">Tambah Tags</a>
                 @endcan
             </div>
             <div class="card-body">
@@ -21,9 +21,12 @@
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">No</th>
-                                <th class="border-bottom-0">Name</th>
-                                <th class="border-bottom-0">Email</th>
-                                <th class="border-bottom-0">Role</th>
+                                <th class="border-bottom-0">Tags</th>
+                                <th class="border-bottom-0">Slug</th>
+                                <th class="border-bottom-0">Keywords</th>
+                                <th class="border-bottom-0">Meta Description</th>
+                                <th class="border-bottom-0">Dibuat</th>
+                                <th class="border-bottom-0">Diperbarui</th>
                                 <th class="border-bottom-0">Action</th>
                             </tr>
                         </thead>
@@ -47,29 +50,20 @@
                 <input type="hidden" name="id" id="id">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="form-label">Nama lengkap</label>
+                        <label class="form-label">Nama Tags</label>
                         <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email">
+                        <label class="form-label">Slug</label>
+                        <input type="text" class="form-control" id="slug" name="slug">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Roles</label>
-                        <select class="form-control" id="roles" name="roles">
-                            <option>==Pilih Role==</option>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
+                        <label class="form-label">Keywords</label>
+                        <input type="text" class="form-control" id="keywords" name="keywords">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Konfirmasi Password</label>
-                        <input type="password" class="form-control" id="confirm-password" name="confirm-password">
+                        <label class="form-label">Meta Description</label>
+                        <input type="text" class="form-control" id="meta_desc" name="meta_desc">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -109,15 +103,23 @@
             processing: true,
             serverSide: true,
             type: 'JSON',
-            ajax: '{{ route('users.list') }}',
+            ajax: '{{ route('tags_artikel.list') }}',
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data : 'roles', name : 'roles', render: function(data) {
-                    let names = data.map(x => x.name);
-                    return names.join("<br/>");
-                }},
+                {data: 'slug', name: 'slug'},
+                {data: 'keywords', name: 'keywords'},
+                {data: 'meta_desc', name: 'meta_desc'},
+                {data: "created_by",
+                    render: function ( data, type, row ) {
+                        return row.nama1 + '<br>(' + row.created_at + ')';
+                    }
+                },
+                {data: "updated_by",
+                    render: function ( data, type, row ) {
+                        return row.nama2 + '<br>(' + row.updated_at + ')';
+                    }
+                },
                 {
                     data: 'action', 
                     name: 'action', 
@@ -130,7 +132,7 @@
 
     function add(){
         $('#form').trigger("reset");
-        $('.modal-title').html("Tambah Pengguna");
+        $('.modal-title').html("Tambah Tags");
         $('#modal').modal('show');
         $('#id').val('');
     }
@@ -138,16 +140,17 @@
     function edit(id){
         $.ajax({
             type:"POST",
-            url: '{{ route('users.edit') }}',
+            url: '{{ route('tags_artikel.edit') }}',
             data: { id: id },
             dataType: 'json',
             success: function(data){
-                $('.modal-title').html("Edit Pengguna");
+                $('.modal-title').html("Edit Tags");
                 $('#modal').modal('show');
-                $('#id').val(data[0]['id']);
-                $('#name').val(data[0]['name']);
-                $('#roles').val(data[1]);
-                $('#email').val(data[0]['email']);
+                $('#id').val(data.id);
+                $('#name').val(data.name);
+                $('#slug').val(data.slug);
+                $('#keywords').val(data.keywords);
+                $('#meta_desc').val(data.meta_desc);
             }
         });
     }
@@ -158,7 +161,7 @@
         var formData = new FormData(this);
         $.ajax({
             type:'POST',
-            url: '{{ route('users.store') }}',
+            url: '{{ route('tags_artikel.store') }}',
             data: formData,
             cache:false,
             contentType: false,
@@ -166,7 +169,7 @@
             success: (data) => {
                 $("#modal").modal('hide');
                 $.growl.notice({
-                    message: "Berhasil menambahkan pengguna."
+                    message: "Berhasil menambahkan tags."
                 });
                 $('#datatable').dataTable().fnDraw(false);
                 $("#btn-save").html('Submit');
@@ -182,17 +185,17 @@
     });
 
     function deleteu(id){
-        if (confirm("Hapus pengguna ini?") == true) {
+        if (confirm("Hapus tags ini?") == true) {
             var id = id;
             $.ajax({
                 type:"POST",
-                url: "{{ url('users/delete') }}",
+                url: "{{ url('tags_artikel/delete') }}",
                 data: { id: id },
                 dataType: 'json',
                 success: function(res){
                     $('#datatable').dataTable().fnDraw(false);
                     $.growl.notice({
-                        message: "Pengguna berhasil dihapus."
+                        message: "Tags berhasil dihapus."
                     });
                 }
             });

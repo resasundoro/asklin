@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Surveyor;
 use Illuminate\Http\Request;
 use DataTables;
-use App\Models\User;
-use App\Models\Province;
-use App\Models\Regency;
-use App\Models\District;
-use App\Models\Village;
+use App\Models\{User, Province, Regency, District, Village};
 
 class SurveyorController extends Controller
 { 
