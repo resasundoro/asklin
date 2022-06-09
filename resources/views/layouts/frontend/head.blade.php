@@ -3,9 +3,9 @@
     <!-- META DATA -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
+    <meta name="description" content="@yield('meta_desc')">
     <meta name="author" content="Mestika Aplikasi">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="@yield('keywords')">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

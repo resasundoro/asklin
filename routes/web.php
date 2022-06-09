@@ -38,8 +38,15 @@ use App\Http\Controllers\ArtikelController;
 |
 */
   
-// Page
+// Frontend
 Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/karir', [PageController::class, 'karir'])->name('karir');
+Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');
+Route::get('/event', [PageController::class, 'event'])->name('event');
+Route::get('/blog', [PageController::class, 'blog'])->name('blog');
+Route::get('blog/{slug}', [PageController::class, 'blog_show'])->name('blog.show');
+Route::get('blog/kategori/{Kategori_artikel:slug}', [PageController::class, 'kategori_blog'])->name('kategori.blog');
+Route::get('blog/tags/{Tags_artikel:slug}', [PageController::class, 'tags_blog'])->name('tags.blog');
 
 Auth::routes();
 

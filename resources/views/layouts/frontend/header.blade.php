@@ -24,8 +24,8 @@
                                                 <li><a class="dropdown-item" href="tentang-kami.html">Sejarah Dan Fungsi ASKI</a></li>
                                                 <li><a class="dropdown-item" href="404.html">Struktur Organisasi</a></li>
                                                 <li><a class="dropdown-item" href="404.html">Rencana Strategis</a></li>
-                                                <li><a class="dropdown-item" href="404.html">Berita</a></li>
-                                                <li><a class="dropdown-item" href="event.html">Event</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('blog') }}">Berita</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('event') }}">Event</a></li>
                                             </ul>
                                         </li>
                                         <li class="dropdown">
@@ -38,8 +38,8 @@
                                                 <li><a class="dropdown-item" href="404.html">Jadwal Diklat</a></li>
                                             </ul>
                                         </li>
-                                        <li><a class="dropdown-item" href="karir.html">Karir</a></li>
-                                        <li><a class="dropdown-item" href="kontak-kami.html">Kontak Kami</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('karir') }}">Karir</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('kontak') }}">Kontak Kami</a></li>
                                         @guest
                                             <li><a class="dropdown-item" href="{{ route('register') }}">Pendaftaran Aski</a></li>
                                         @else
